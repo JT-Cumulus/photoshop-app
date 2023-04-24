@@ -52,9 +52,11 @@ public class Main {
                 case 2:
                 cart.displayCart();
 
+                // Print invoice details / allow user to access order details from invoice no.
                 case 3:
                 checkInvoice();
 
+                // Exit program condition
                 case -1:
                 userLocation = -1;
 
@@ -62,7 +64,7 @@ public class Main {
 
         }
         
-        // Pickup time goes to next day if it doesnt
+        // Pickup time provided for the day the pickup is allowed
 
         // Close scanner at end
         scan.close();
