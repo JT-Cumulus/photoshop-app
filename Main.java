@@ -102,7 +102,7 @@ public class Main {
             // Check if user wants to make purchase
             if (status.equals("b")){
                 userLocation = 2;
-                cart.saveCart();
+                cart.saveCart(cart);
                 //cart.exportJson();
             }
         }

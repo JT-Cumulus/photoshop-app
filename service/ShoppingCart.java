@@ -19,14 +19,16 @@ import com.opencsv.CSVWriter;
 public class ShoppingCart extends Catalogue{
     
     private List<Item> currentCart;
-    private Integer orderID = 1;
+    private Integer orderID;
+    private double totalPrice;
 
     // Set global orderID based on current value in csv
-    this.loadItems();
 
     public ShoppingCart(){
+        this.orderID = loadItems();
         this.currentCart = new LinkedList<>();
         this.orderID += 1;
+        this.totalPrice = 0;
     }
 
     // Return the current cart
@@ -35,9 +37,10 @@ public class ShoppingCart extends Catalogue{
     }
 
     // Load items already saved as orders
-    public void loadItems(){
+    public int loadItems(){
         String fileName = "database/PhotoShop_Orders.csv";
         File file = new File(fileName);
+        int id = 1;
 
         // this gives you a 2-dimensional array of strings
         Scanner inputStream;
@@ -48,12 +51,15 @@ public class ShoppingCart extends Catalogue{
                 String line = inputStream.nextLine();
                 String[] values = line.split(";");
                 // this adds the currently parsed line to the 2-dimensional string array
-                this.orderID = Integer.parseInt(values[0]);
+                id = Integer.parseInt(values[0]);
             }
             inputStream.close();
+            
         }catch (FileNotFoundException e) {
             e.printStackTrace();
         }
+
+        return id;
     }
 
     // Return the item within the cart such that the quantity can be updated in the shopping cart
@@ -87,16 +93,15 @@ public class ShoppingCart extends Catalogue{
 
     // Display purchased items in cart and print total price
     public void displayCart(){
-        double totalPrice = 0;
         System.out.println(String.format("%-5s %-30s %15s %20s %20s" , "ID", "Item", "Price(EUR)", "Time to Make (min)", "Quantity" ));
         for (Item object: this.currentCart) {
-            totalPrice += object.getPrice() * object.getQuantity();
+            this.totalPrice += object.getPrice() * object.getQuantity();
             System.out.println(object + "\t\t" + object.getQuantity());
         }
-        System.out.println("Total Price: " + totalPrice);
+        System.out.println("Total Price: " + this.totalPrice);
     }
 
-    public void saveCart(){
+    public void saveCart(ShoppingCart cart){
     // first create file object for file placed at location
     // specified by filepath
     File file = new File("./database/PhotoShop_Orders.csv");
@@ -105,14 +110,10 @@ public class ShoppingCart extends Catalogue{
         FileWriter outputfile = new FileWriter(file);
   
         // create CSVWriter object filewriter object as parameter
-        CSVWriter writer = new CSVWriter(outputfile);
-  
-        // adding header to csv
-        //String[] header = { "OrderID", "Products", "Price" };
-        //writer.writeNext(header);
+        CSVWriter writer = new CSVWriter(outputfile,CSVWriter.DEFAULT_QUOTE_CHARACTER , CSVWriter.NO_QUOTE_CHARACTER, CSVWriter.DEFAULT_ESCAPE_CHARACTER, CSVWriter.DEFAULT_LINE_END);
   
         // add data to csv
-        String[] data = {this.orderID.toString(), this.currentCart.toString()};
+        String[] data = {cart.orderID, cart.convertString()};
         writer.writeNext(data);
   
         // closing writer connection
@@ -139,6 +140,15 @@ public class ShoppingCart extends Catalogue{
         catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    // Function for iterating over items in shopping cart for invoice purposes
+    public String convertString(){
+        String temp = "";
+        for(Item items : this.currentCart){
+            temp += items.getId() + ";" + items.getQuantity() + ";" + items.getPrice() + ";";
+        }
+        return temp;
     }
     
 }
