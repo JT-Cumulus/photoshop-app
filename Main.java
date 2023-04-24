@@ -50,7 +50,7 @@ public class Main {
 
                 // Print order details
                 case 2:
-                cart.displayCart();
+                checkOrder();
 
                 // Print invoice details / allow user to access order details from invoice no.
                 case 3:
@@ -78,7 +78,7 @@ public class Main {
         System.out.println(menuDivider);
         System.out.print(menuWelcomeMessage);
         System.out.println(menuDivider);
-        System.out.println("Press 1 - See shop catalogue");
+        System.out.println("Press 1 - Make a purchase");
         System.out.println("Press 2 - See order status");
         System.out.println("Press 3 - See invoice details");
         System.out.println("Press 0 - Exit program");
@@ -102,13 +102,14 @@ public class Main {
             // Check if user wants to make purchase
             if (status.equals("b")){
                 userLocation = 2;
-                cart.exportJson();
+                cart.saveCart();
+                //cart.exportJson();
             }
         }
     }
 
     public static void checkOrder(){
-
+        cart.displayCart();
     }
 
     public static void checkInvoice(){
@@ -139,11 +140,12 @@ public class Main {
         return new Item(id, name, price, hours);
     }
 
+
+    private static int toMins(String s) {
     /**
      * @param s H:m timestamp, i.e. [Hour in day (0-23)]:[Minute in hour (0-59)]
      * @return total minutes after 00:00
      */
-    private static int toMins(String s) {
         String[] hourMin = s.split(":");
         int hour = Integer.parseInt(hourMin[0]);
         int mins = Integer.parseInt(hourMin[1]);
@@ -153,15 +155,14 @@ public class Main {
 
     // Load items from pricelist csv
     public static void loadItems(){
-        String fileName= "database/PhotoShop_PriceList.csv";
-        File file= new File(fileName);
+        String fileName = "database/PhotoShop_PriceList.csv";
+        File file = new File(fileName);
 
         // this gives you a 2-dimensional array of strings
         Scanner inputStream;
 
         try{
             inputStream = new Scanner(file);
-
             while(inputStream.hasNext()){
                 String line = inputStream.nextLine();
                 String[] values = line.split(";");
@@ -169,7 +170,6 @@ public class Main {
                 Item items = createItem(values);
                 catalogue.addItem(items);
             }
-
             inputStream.close();
         }catch (FileNotFoundException e) {
             e.printStackTrace();

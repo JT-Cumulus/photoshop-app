@@ -1,20 +1,28 @@
 package service;
 
 import java.util.List;
+import java.util.Scanner;
+import java.util.ArrayList;
 import java.util.LinkedList;
-
+import java.io.File;
+import java.io.FileNotFoundException;
 // Writing to json 
 import java.io.FileWriter;
 import java.io.IOException;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.opencsv.CSVWriter;
 
-// Store current items placed in shopping cart as treemap
+
+// Store current items placed in shopping cart
 public class ShoppingCart extends Catalogue{
     
     private List<Item> currentCart;
-    private int orderID = 0;
+    private Integer orderID = 1;
+
+    // Set global orderID based on current value in csv
+    this.loadItems();
 
     public ShoppingCart(){
         this.currentCart = new LinkedList<>();
@@ -26,6 +34,28 @@ public class ShoppingCart extends Catalogue{
         return this.currentCart;
     }
 
+    // Load items already saved as orders
+    public void loadItems(){
+        String fileName = "database/PhotoShop_Orders.csv";
+        File file = new File(fileName);
+
+        // this gives you a 2-dimensional array of strings
+        Scanner inputStream;
+
+        try{
+            inputStream = new Scanner(file);
+            while(inputStream.hasNext()){
+                String line = inputStream.nextLine();
+                String[] values = line.split(";");
+                // this adds the currently parsed line to the 2-dimensional string array
+                this.orderID = Integer.parseInt(values[0]);
+            }
+            inputStream.close();
+        }catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
     // Return the item within the cart such that the quantity can be updated in the shopping cart
     public Item getIteminCart(Item item){
         List<Item> temp = this.currentCart;
@@ -33,7 +63,7 @@ public class ShoppingCart extends Catalogue{
             if (object.getId() == item.getId()){
                 return object;
             } 
-    }
+        }
         return null;
     }
 
@@ -61,15 +91,43 @@ public class ShoppingCart extends Catalogue{
         System.out.println(String.format("%-5s %-30s %15s %20s %20s" , "ID", "Item", "Price(EUR)", "Time to Make (min)", "Quantity" ));
         for (Item object: this.currentCart) {
             totalPrice += object.getPrice() * object.getQuantity();
-            System.out.println(object + "\t" + object.getQuantity());
+            System.out.println(object + "\t\t" + object.getQuantity());
         }
         System.out.println("Total Price: " + totalPrice);
+    }
+
+    public void saveCart(){
+    // first create file object for file placed at location
+    // specified by filepath
+    File file = new File("./database/PhotoShop_Orders.csv");
+    try {
+        // create FileWriter object with file as parameter
+        FileWriter outputfile = new FileWriter(file);
+  
+        // create CSVWriter object filewriter object as parameter
+        CSVWriter writer = new CSVWriter(outputfile);
+  
+        // adding header to csv
+        //String[] header = { "OrderID", "Products", "Price" };
+        //writer.writeNext(header);
+  
+        // add data to csv
+        String[] data = {this.orderID.toString(), this.currentCart.toString()};
+        writer.writeNext(data);
+  
+        // closing writer connection
+        writer.close();
+    }
+    catch (IOException e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+    }
     }
 
     // Export purchase to .json file
     public void exportJson(){
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        String orderNumber = Integer.toString(orderID);
+        String orderNumber = Integer.toString(this.orderID);
         // Java Object to String
         // String json = gson.toJson(this.getCart());
   
