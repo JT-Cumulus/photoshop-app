@@ -110,10 +110,10 @@ public class ShoppingCart extends Catalogue{
         FileWriter outputfile = new FileWriter(file);
   
         // create CSVWriter object filewriter object as parameter
-        CSVWriter writer = new CSVWriter(outputfile,CSVWriter.DEFAULT_QUOTE_CHARACTER , CSVWriter.NO_QUOTE_CHARACTER, CSVWriter.DEFAULT_ESCAPE_CHARACTER, CSVWriter.DEFAULT_LINE_END);
+        CSVWriter writer = new CSVWriter(outputfile, ';', CSVWriter.NO_QUOTE_CHARACTER, CSVWriter.DEFAULT_ESCAPE_CHARACTER, CSVWriter.DEFAULT_LINE_END);
   
         // add data to csv
-        String[] data = {cart.orderID, cart.convertString()};
+        String[] data = {cart.orderID.toString(), cart.convertString()};
         writer.writeNext(data);
   
         // closing writer connection
