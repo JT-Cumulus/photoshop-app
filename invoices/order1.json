@@ -1,0 +1,16 @@
+[
+  {
+    "id": 5,
+    "name": "Canvas 30 x 40 mat",
+    "price": 24.0,
+    "hours": 720,
+    "quantity": 2
+  },
+  {
+    "id": 7,
+    "name": "Canvas 100 x 150 mat",
+    "price": 64.75,
+    "hours": 960,
+    "quantity": 1
+  }
+]
