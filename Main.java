@@ -57,7 +57,7 @@ public class Main {
                 checkInvoice();
 
                 // Exit program condition
-                case -1:
+                case 0:
                 userLocation = -1;
 
             }
@@ -74,22 +74,15 @@ public class Main {
     public static void shopMenu(){
         String menuWelcomeMessage = "Hello, welcome to PhotoShop \n" + "Please type a number to navigate the menu \n";
         String menuDivider = "---------------------------";
-        if (userLocation == 0){
-            System.out.println(menuDivider);
-            System.out.print(menuWelcomeMessage);
-            System.out.println(menuDivider);
-            System.out.println("Press 1 - See shop catalogue");
-            System.out.println("Press 2 - See order status");
-            System.out.println("Press 3 - See invoice details");
-            System.out.println(menuDivider);
-        } else if (userLocation == 1){
-            System.out.println(menuDivider);
-            System.out.println("Press 1 - Add an item to cart");
-            System.out.println("Press 2 - Remove an item");
-            System.out.println("Press 3 - See your cart");
-            System.out.println("Press 4 - Cancel and Go back");
-            System.out.println(menuDivider);
-        }
+
+        System.out.println(menuDivider);
+        System.out.print(menuWelcomeMessage);
+        System.out.println(menuDivider);
+        System.out.println("Press 1 - See shop catalogue");
+        System.out.println("Press 2 - See order status");
+        System.out.println("Press 3 - See invoice details");
+        System.out.println("Press 0 - Exit program");
+        System.out.println(menuDivider);
         
     }
 
