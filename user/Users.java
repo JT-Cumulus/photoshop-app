@@ -11,6 +11,9 @@ public abstract class Users {
     private String email;
     private int mobile;
 
+    public Users(int id) {
+        this.ID = id;
+    }
 
     public int getID() {
         return this.ID;
@@ -75,5 +78,7 @@ public abstract class Users {
     public void setMobile(int mobile) {
         this.mobile = mobile;
     }
+
+    public abstract Users clone();
 
 }

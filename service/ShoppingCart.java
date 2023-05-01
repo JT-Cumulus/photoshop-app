@@ -2,7 +2,6 @@ package service;
 
 import java.util.List;
 import java.util.Scanner;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.io.File;
 import java.io.FileNotFoundException;

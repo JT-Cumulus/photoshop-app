@@ -3,7 +3,7 @@ package repository;
 import user.Users;
 
 public class UserRepositoryImpl implements UserRepository {
-    private UserDaoImpl userDaoImpl;
+    private UserRepository userDaoImpl;
     
     @Override
     public Users get(Long id) {
@@ -14,5 +14,15 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public void add(Users user) {
         userDaoImpl.create(user);
+    }
+
+    @Override
+    public void update(Users user) {
+
+    }
+
+    @Override
+    public void remove(Users user) {
+
     }
 }
