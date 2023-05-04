@@ -5,9 +5,12 @@ import java.io.FileNotFoundException;
 import java.time.LocalTime;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
+import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
+import static java.time.temporal.ChronoUnit.HOURS;
+
 
 public class Days {
     // Class responsible for displaying time remaining until order is complete
@@ -15,12 +18,14 @@ public class Days {
     private String day;
     private LocalTime openFrom;
     private LocalTime openTill;
+    private Long workingHours;
 
     public Days(int dayNumber, String day, LocalTime openFrom, LocalTime openTill) {
         this.dayNumber = dayNumber;
         this.day = day;
         this.openFrom = openFrom;
         this.openTill = openTill;
+        this.workingHours = HOURS.between(openFrom, openTill);
     }
 
     public int getDayNumber() {
@@ -99,12 +104,22 @@ public class Days {
         }
     }
 
+    // Return the day of the week as an int
+    public static int calculateDayOfWeek(){
+        Calendar c = Calendar.getInstance();
+        c.setTime(c.getTime());
+        return c.get(Calendar.DAY_OF_WEEK);
+    }
+
     public static void calculatePickup(Item item){
         LocalDateTime timeNow = LocalDateTime.now();
         int workDuration = item.getHours();
         System.out.println(timeNow.plus(workDuration, ChronoUnit.MINUTES));
+        System.out.println(Days.calculateDayOfWeek());
 
-        
+        while(workDuration > 0){
+            // Start now and cycle through days of the week csv
+        }
 
     }
 
