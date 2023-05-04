@@ -10,7 +10,6 @@ import java.util.Scanner;
 
 public class Days {
     // Class responsible for displaying time remaining until order is complete
-
     private int dayNumber;
     private String day;
     private LocalTime openFrom;
@@ -66,9 +65,15 @@ public class Days {
     }
 
     public static void displayOpeningTimes(List<Days> days){
+        System.out.println(String.format("%-30s %15s %15s" , "Day", "Open From", "Open Till"));
         for(Days current: days){
             System.out.println(current.toString());
         }
+    }
+
+    public String toString(){
+        return String.format("%-30s %15s %15s" , this.day, this.openFrom, this.openTill );
+
     }
 
     public int getDayNumber() {

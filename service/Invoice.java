@@ -29,5 +29,8 @@ public class Invoice {
      * Total costs              sum(price)
      */
 
+     public Invoice(){
+        
+     }
      
 }

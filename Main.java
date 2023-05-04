@@ -28,6 +28,8 @@ public class Main {
 
     static int userLocation = 0;
     public static void main(String[] args) {
+
+        Days.displayOpeningTimes(openingTimes);
         
         // Main store menu
         shopMenu();
