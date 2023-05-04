@@ -23,7 +23,6 @@ public class Days {
         this.openTill = openTill;
     }
 
-
     public static void displayLocalTime(){
         Calendar c = Calendar.getInstance();
         System.out.println("The Current LocalTime is:" + c.getTime());
