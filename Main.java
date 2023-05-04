@@ -29,13 +29,12 @@ public class Main {
     static int userLocation = 0;
     public static void main(String[] args) {
 
-        Days.displayOpeningTimes(openingTimes);
-        
         // Main store menu
         shopMenu();
 
         // Load daily prices
         loadItems();
+        Days.calculatePickup(catalogue.getItem(11));
 
         // Set quit condition for terminating application
         while (userLocation != -1){

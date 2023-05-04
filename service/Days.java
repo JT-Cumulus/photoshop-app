@@ -3,7 +3,8 @@ package service;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.time.LocalTime;
-import java.util.Calendar;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
@@ -22,9 +23,36 @@ public class Days {
         this.openTill = openTill;
     }
 
-    public static void displayLocalTime(){
-        Calendar c = Calendar.getInstance();
-        System.out.println("The Current LocalTime is:" + c.getTime());
+    public int getDayNumber() {
+        return this.dayNumber;
+    }
+
+    public void setDayNumber(int dayNumber) {
+        this.dayNumber = dayNumber;
+    }
+
+    public String getDay() {
+        return this.day;
+    }
+
+    public void setDay(String day) {
+        this.day = day;
+    }
+
+    public LocalTime getOpenFrom() {
+        return this.openFrom;
+    }
+
+    public void setOpenFrom(LocalTime openFrom) {
+        this.openFrom = openFrom;
+    }
+
+    public LocalTime getOpenTill() {
+        return this.openTill;
+    }
+
+    public void setOpenTill(LocalTime openTill) {
+        this.openTill = openTill;
     }
 
     private static Days createDay(String[] metadata) {
@@ -71,41 +99,19 @@ public class Days {
         }
     }
 
+    public static void calculatePickup(Item item){
+        LocalDateTime timeNow = LocalDateTime.now();
+        int workDuration = item.getHours();
+        System.out.println(timeNow.plus(workDuration, ChronoUnit.MINUTES));
+
+        
+
+    }
+
     public String toString(){
         return String.format("%-30s %15s %15s" , this.day, this.openFrom, this.openTill );
-
     }
 
-    public int getDayNumber() {
-        return this.dayNumber;
-    }
 
-    public void setDayNumber(int dayNumber) {
-        this.dayNumber = dayNumber;
-    }
-
-    public String getDay() {
-        return this.day;
-    }
-
-    public void setDay(String day) {
-        this.day = day;
-    }
-
-    public LocalTime getOpenFrom() {
-        return this.openFrom;
-    }
-
-    public void setOpenFrom(LocalTime openFrom) {
-        this.openFrom = openFrom;
-    }
-
-    public LocalTime getOpenTill() {
-        return this.openTill;
-    }
-
-    public void setOpenTill(LocalTime openTill) {
-        this.openTill = openTill;
-    }
 
 }
