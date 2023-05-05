@@ -6,14 +6,14 @@ public class Item {
     private int id;
     private String name;
     private double price;
-    private int hours;
+    private int minutes;
     private int quantity;
 
-    public Item(int id, String name, double price, int hours){
+    public Item(int id, String name, double price, int minutes){
         this.id = id;
         this.name = name;
         this.price = price;
-        this.hours = hours;
+        this.minutes = minutes;
         this.quantity = 1;
     }
 
@@ -21,7 +21,7 @@ public class Item {
         this.id = source.id;
         this.name = source.name;
         this.price = source.price;
-        this.hours = source.hours;
+        this.minutes = source.minutes;
         this.quantity = 1;
     }
 
@@ -55,12 +55,12 @@ public class Item {
         this.price = price;
     }
 
-    public int getHours(){
-        return this.hours;
+    public int getminutes(){
+        return this.minutes;
     }
 
-    public void setHours(int hours){
-        this.hours = hours;
+    public void setminutes(int minutes){
+        this.minutes = minutes;
     }
 
     public int getQuantity(){
@@ -77,7 +77,7 @@ public class Item {
     
     public String toString() {
        // Format print to be in readable columns with correct decimal points
-        return String.format("%-5s %-30s %15.2f %20s" , this.id, this.name, this.price, this.hours );
+        return String.format("%-5s %-30s %15.2f %20s" , this.id, this.name, this.price, this.minutes );
     }    
 
 

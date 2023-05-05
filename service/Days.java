@@ -111,17 +111,7 @@ public class Days {
         return c.get(Calendar.DAY_OF_WEEK);
     }
 
-    public static void calculatePickup(Item item){
-        LocalDateTime timeNow = LocalDateTime.now();
-        int workDuration = item.getHours();
-        System.out.println(timeNow.plus(workDuration, ChronoUnit.MINUTES));
-        System.out.println(Days.calculateDayOfWeek());
-
-        while(workDuration > 0){
-            // Start now and cycle through days of the week csv
-        }
-
-    }
+    
 
     public String toString(){
         return String.format("%-30s %15s %15s" , this.day, this.openFrom, this.openTill );

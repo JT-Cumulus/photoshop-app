@@ -1,6 +1,8 @@
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Scanner;
 
@@ -34,7 +36,6 @@ public class Main {
 
         // Load daily prices
         loadItems();
-        Days.calculatePickup(catalogue.getItem(11));
 
         // Set quit condition for terminating application
         while (userLocation != -1){
@@ -183,6 +184,23 @@ public class Main {
         System.out.println(catalogue.toString());
     }
 }
+
+public static void calculatePickup(Item item){
+    LocalDateTime timeNow = LocalDateTime.now();
+    int workDuration = item.getHours();
+    System.out.println(timeNow.plus(workDuration, ChronoUnit.MINUTES));
+    System.out.println(Days.calculateDayOfWeek());
+
+    
+
+    while(workDuration > 0){
+        // Start now and cycle through days of the week csv
+        
+        
+    }
+
+}
+
 
 
 
