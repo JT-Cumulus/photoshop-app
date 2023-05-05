@@ -4,13 +4,11 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.time.LocalTime;
 import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
 import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
-import static java.time.temporal.ChronoUnit.HOURS;
-
+import static java.time.temporal.ChronoUnit.MINUTES;
 
 public class Days {
     // Class responsible for displaying time remaining until order is complete
@@ -18,14 +16,14 @@ public class Days {
     private String day;
     private LocalTime openFrom;
     private LocalTime openTill;
-    private Long workingHours;
+    private Long workingMinutes;
 
     public Days(int dayNumber, String day, LocalTime openFrom, LocalTime openTill) {
         this.dayNumber = dayNumber;
         this.day = day;
         this.openFrom = openFrom;
         this.openTill = openTill;
-        this.workingHours = HOURS.between(openFrom, openTill);
+        this.workingMinutes = MINUTES.between(openFrom, openTill);
     }
 
     public int getDayNumber() {
@@ -60,6 +58,15 @@ public class Days {
         this.openTill = openTill;
     }
 
+    public Long getWorkingMinutes() {
+        return this.workingMinutes;
+    }
+
+    public void setWorkingMinutes(Long workingMinutes) {
+        this.workingMinutes = workingMinutes;
+    }
+
+    
     private static Days createDay(String[] metadata) {
         int dayNumber = Integer.parseInt(metadata[0]);
         String name = metadata[1];
@@ -110,9 +117,7 @@ public class Days {
         c.setTime(c.getTime());
         return c.get(Calendar.DAY_OF_WEEK);
     }
-
     
-
     public String toString(){
         return String.format("%-30s %15s %15s" , this.day, this.openFrom, this.openTill );
     }

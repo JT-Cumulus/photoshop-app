@@ -55,11 +55,11 @@ public class Item {
         this.price = price;
     }
 
-    public int getminutes(){
+    public int getMinutes(){
         return this.minutes;
     }
 
-    public void setminutes(int minutes){
+    public void setMinutes(int minutes){
         this.minutes = minutes;
     }
 
@@ -74,7 +74,7 @@ public class Item {
     public void addQuantity(){
         this.quantity += 1;
     }
-    
+
     public String toString() {
        // Format print to be in readable columns with correct decimal points
         return String.format("%-5s %-30s %15.2f %20s" , this.id, this.name, this.price, this.minutes );

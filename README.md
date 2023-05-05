@@ -5,15 +5,7 @@ To Do List
 - Export whole order as invoice
 - Order time countdown
 - User can check invoice / status of order
-
-- 3 Layer system refactoring O
-- Presentation
-- Service
-- Repository
-
-- userdatabase/customer.csv
-- userdatabase/employee.csv
-- userdatabase/ordertime.csv
+- Euro display with 2 decimal places and full stop decimal separator
 
 Low priority
 - login for admin to control employee database

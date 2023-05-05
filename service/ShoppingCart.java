@@ -20,14 +20,14 @@ public class ShoppingCart extends Catalogue{
     private List<Item> currentCart;
     private Integer orderID;
     private double totalPrice;
-
-    // Set global orderID based on current value in csv
+    private long totalTimeTaken;
 
     public ShoppingCart(){
         this.orderID = loadItems();
         this.currentCart = new LinkedList<>();
         this.orderID += 1;
         this.totalPrice = 0;
+        this.totalTimeTaken = 0;
     }
 
     // Return the current cart
@@ -92,12 +92,14 @@ public class ShoppingCart extends Catalogue{
 
     // Display purchased items in cart and print total price
     public void displayCart(){
-        System.out.println(String.format("%-5s %-30s %15s %20s %20s" , "ID", "Item", "Price(EUR)", "Time to Make (min)", "Quantity" ));
+        System.out.println(String.format("%-5s %-30s %15s %20s %30s" , "ID", "Item", "Price(EUR)", "Time to Make (min)", "Quantity" ));
         for (Item object: this.currentCart) {
             this.totalPrice += object.getPrice() * object.getQuantity();
+            this.totalTimeTaken += object.getMinutes() * object.getQuantity();
             System.out.println(object + "\t\t" + object.getQuantity());
         }
-        System.out.println("Total Price: " + this.totalPrice);
+        System.out.println("Total Price: " + this.returnTotalPrice() + " EUR");
+        System.out.println("Total Time Required: " + ((this.totalTimeTaken / 60) / 24 + " days"));
     }
 
     public void saveCart(ShoppingCart cart){
@@ -121,7 +123,13 @@ public class ShoppingCart extends Catalogue{
     catch (IOException e) {
         // TODO Auto-generated catch block
         e.printStackTrace();
+        }
     }
+
+    // Print the total price as a string with two decimals
+    public String returnTotalPrice(){
+        String price = String.format(java.util.Locale.US,"%.2f", this.totalPrice);
+        return price;
     }
 
     // Export purchase to .json file

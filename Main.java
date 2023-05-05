@@ -183,24 +183,26 @@ public class Main {
         System.out.println(String.format("%-5s %-30s %15s %20s" , "ID", "Item", "Price(EUR)", "Time to Make (min)"));
         System.out.println(catalogue.toString());
     }
-}
 
-public static void calculatePickup(Item item){
+
+public static int calculatePickup(Long totalWorkDuration){
     LocalDateTime timeNow = LocalDateTime.now();
-    int workDuration = item.getHours();
+    long workDuration = totalWorkDuration;
     System.out.println(timeNow.plus(workDuration, ChronoUnit.MINUTES));
     System.out.println(Days.calculateDayOfWeek());
-
-    
+    int daysTaken = 0;
 
     while(workDuration > 0){
         // Start now and cycle through days of the week csv
-        
-        
+        for(Days day : openingTimes){
+            if(workDuration - day.getWorkingMinutes() < 0){
+                break;
+            }
+            workDuration -= day.getWorkingMinutes();
+            daysTaken++;
+        }
     }
-
+    return daysTaken;
 }
 
-
-
-
+}
