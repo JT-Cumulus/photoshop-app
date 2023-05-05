@@ -65,7 +65,6 @@ public class Days {
     public void setWorkingMinutes(Long workingMinutes) {
         this.workingMinutes = workingMinutes;
     }
-
     
     private static Days createDay(String[] metadata) {
         int dayNumber = Integer.parseInt(metadata[0]);

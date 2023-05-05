@@ -1,7 +1,9 @@
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.time.Instant;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Scanner;
@@ -36,6 +38,8 @@ public class Main {
 
         // Load daily prices
         loadItems();
+
+        Days.displayOpeningTimes(openingTimes);
 
         // Set quit condition for terminating application
         while (userLocation != -1){
@@ -112,6 +116,7 @@ public class Main {
 
     public static void checkOrder(){
         cart.displayCart();
+        System.out.println(calculatePickup(cart.getTotalTime()));
     }
 
     public static void checkInvoice(){
@@ -186,11 +191,25 @@ public class Main {
 
 
 public static int calculatePickup(Long totalWorkDuration){
-    LocalDateTime timeNow = LocalDateTime.now();
+    long timeNow = Instant.now().toEpochMilli();
     long workDuration = totalWorkDuration;
-    System.out.println(timeNow.plus(workDuration, ChronoUnit.MINUTES));
-    System.out.println(Days.calculateDayOfWeek());
+    //System.out.println(timeNow.plus(workDuration, ChronoUnit.MINUTES));
+    int currentDay = Days.calculateDayOfWeek();
+    openingTimes.get(currentDay).getOpenTill().minus(timeNow, ChronoUnit.MINUTES);
+    workDuration =- (currentDay);
     int daysTaken = 0;
+    if (currentDay != 0){
+        while(workDuration > 0 && currentDay != 0){
+            // Start now and cycle through days of the week csv
+            for(int i = currentDay; i < openingTimes.size();i++){
+                if(workDuration - openingTimes.get(i).getWorkingMinutes() < 0){
+                    break;
+                }
+                workDuration -= openingTimes.get(i).getWorkingMinutes();
+                daysTaken++;
+            }
+        }
+    }
 
     while(workDuration > 0){
         // Start now and cycle through days of the week csv

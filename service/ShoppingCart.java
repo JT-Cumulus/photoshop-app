@@ -132,6 +132,10 @@ public class ShoppingCart extends Catalogue{
         return price;
     }
 
+    public long getTotalTime(){
+        return this.totalTimeTaken;
+    }
+
     // Export purchase to .json file
     public void exportJson(){
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
