@@ -99,7 +99,8 @@ public class ShoppingCart extends Catalogue{
             System.out.println(object + "\t\t" + object.getQuantity());
         }
         System.out.println("Total Price: " + this.returnTotalPrice() + " EUR");
-        System.out.println("Total Time Required: " + ((this.totalTimeTaken / 60) / 24 + " days"));
+        //System.out.println("Total Time Required: " + ((this.totalTimeTaken / 60) / 24 + " days"));
+        System.out.println("Total Time Required: " + ((this.totalTimeTaken / 60) + " working hours"));
     }
 
     public void saveCart(ShoppingCart cart){
