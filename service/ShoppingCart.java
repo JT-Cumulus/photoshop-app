@@ -6,7 +6,6 @@ import java.util.LinkedList;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
-// Writing to json 
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
@@ -14,7 +13,6 @@ import java.io.Writer;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.opencsv.CSVWriter;
-
 
 // Store current items placed in shopping cart
 public class ShoppingCart extends Catalogue{
