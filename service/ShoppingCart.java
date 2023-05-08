@@ -3,11 +3,13 @@ package service;
 import java.util.List;
 import java.util.Scanner;
 import java.util.LinkedList;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 // Writing to json 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.Writer;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -106,16 +108,16 @@ public class ShoppingCart extends Catalogue{
     public void saveCart(ShoppingCart cart){
     // first create file object for file placed at location
     // specified by filepath
-    File file = new File("./database/PhotoShop_Orders.csv");
     try {
         // create FileWriter object with file as parameter
-        FileWriter outputfile = new FileWriter(file);
+        Writer outputfile;
+        outputfile = new BufferedWriter(new FileWriter("./database/PhotoShop_Orders.csv", true));
   
         // create CSVWriter object filewriter object as parameter
         CSVWriter writer = new CSVWriter(outputfile, ';', CSVWriter.NO_QUOTE_CHARACTER, CSVWriter.DEFAULT_ESCAPE_CHARACTER, CSVWriter.DEFAULT_LINE_END);
   
         // add data to csv
-        String[] data = {cart.orderID.toString(), cart.convertString()};
+        String[] data = {cart.orderID.toString(), Days.getDateToday()};
         writer.writeNext(data);
   
         // closing writer connection
@@ -146,7 +148,7 @@ public class ShoppingCart extends Catalogue{
   
         // Java Object to a file
         try (FileWriter writer = new FileWriter(
-                 "./invoices/order" + orderNumber + ".json")) {
+                 "./invoices/order_" + orderNumber + ".json")) {
             gson.toJson(this.currentCart, writer);
         }
         catch (IOException e) {
@@ -162,5 +164,35 @@ public class ShoppingCart extends Catalogue{
         }
         return temp;
     }
+ 
     
+    public void setCurrentCart(List<Item> currentCart) {
+        this.currentCart = currentCart;
+    }
+
+    public Integer getOrderID() {
+        return this.orderID;
+    }
+
+    public void setOrderID(Integer orderID) {
+        this.orderID = orderID;
+    }
+
+    public double getTotalPrice() {
+        return this.totalPrice;
+    }
+
+    public void setTotalPrice(double totalPrice) {
+        this.totalPrice = totalPrice;
+    }
+
+    public long getTotalTimeTaken() {
+        return this.totalTimeTaken;
+    }
+
+    public void setTotalTimeTaken(long totalTimeTaken) {
+        this.totalTimeTaken = totalTimeTaken;
+    }
+
+
 }
