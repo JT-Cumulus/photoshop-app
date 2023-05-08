@@ -1,4 +1,3 @@
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.time.LocalDate;
@@ -99,8 +98,9 @@ public class Main {
             int choice = scan.nextInt() - 1;
             Item item = catalogue.getItem(choice);
             cart.addItem(item);
-            System.out.print("You have added " + item.getName());
-            System.out.print("\nTo add another item, type: 'c' or type 'b' to make your purchase ");
+            System.out.print("You have added: " + item.getName());
+            System.out.print("\nTo add another item type: 'c'");
+            System.out.print("\nTo finalise your purchase type: 'b");
             status = scan.next();
 
             // Check if user wants to make purchase
