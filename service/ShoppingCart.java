@@ -9,6 +9,7 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
+import java.time.LocalDate;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -21,6 +22,7 @@ public class ShoppingCart extends Catalogue{
     private Integer orderID;
     private double totalPrice;
     private long totalTimeTaken;
+    private LocalDate pickupDate;
 
     public ShoppingCart(){
         this.orderID = loadItems();
@@ -114,7 +116,7 @@ public class ShoppingCart extends Catalogue{
         CSVWriter writer = new CSVWriter(outputfile, ';', CSVWriter.NO_QUOTE_CHARACTER, CSVWriter.DEFAULT_ESCAPE_CHARACTER, CSVWriter.DEFAULT_LINE_END);
   
         // add data to csv
-        String[] data = {cart.orderID.toString(), Days.getDateToday()};
+        String[] data = {cart.orderID.toString(), Days.getDateToday(), Days.dateToString(cart.pickupDate)};
         writer.writeNext(data);
   
         // closing writer connection
@@ -189,6 +191,14 @@ public class ShoppingCart extends Catalogue{
 
     public void setTotalTimeTaken(long totalTimeTaken) {
         this.totalTimeTaken = totalTimeTaken;
+    }
+
+    public LocalDate getPickupDate(){
+        return this.pickupDate;
+    }
+
+    public void setPickupDate(LocalDate pickupDate){
+        this.pickupDate = pickupDate;
     }
 
 

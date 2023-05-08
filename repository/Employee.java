@@ -1,5 +1,10 @@
 package repository;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.Scanner;
+
 public class Employee{
 
     private int employeeId;
@@ -10,6 +15,35 @@ public class Employee{
         this.employeeId = employeeId;
         this.firstName = firstName;
         this.lastName = lastName;
+    }
+
+    private static Employee createEmployee(String[] metadata) {
+        int id = Integer.parseInt(metadata[0]);
+        String firstName = metadata[1];
+        String lastName = metadata[2];
+
+        return new Employee(id, firstName, lastName);
+    }
+
+    public static ArrayList<Employee> loadEmployees(){
+        String fileName = "user/PhotoShop_Employees.csv";
+        File file = new File(fileName);
+        ArrayList<Employee> EmployeeContainer = new ArrayList<>();
+        Scanner inputStream;
+
+        try{
+            inputStream = new Scanner(file);
+            while(inputStream.hasNext()){
+                String line = inputStream.nextLine();
+                String[] values = line.split(";");
+                Employee Employee = createEmployee(values);
+                EmployeeContainer.add(Employee);
+            }
+            inputStream.close();
+        }catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        return EmployeeContainer;
     }
 
     public int getEmployeeId() {

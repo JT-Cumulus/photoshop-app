@@ -3,7 +3,6 @@ package repository;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 public class Customer {
@@ -16,7 +15,6 @@ public class Customer {
     private String city;
     private String email;
     private String mobile;
-
 
     public Customer(int ID, String firstName, String lastName, String address, String postcode, String city, String email, String mobile) {
         this.ID = ID;
@@ -46,7 +44,6 @@ public class Customer {
         String fileName = "user/PhotoShop_Customers.csv";
         File file = new File(fileName);
         ArrayList<Customer> customerContainer = new ArrayList<>();
-        // this gives you a 2-dimensional array of strings
         Scanner inputStream;
 
         try{
@@ -54,7 +51,6 @@ public class Customer {
             while(inputStream.hasNext()){
                 String line = inputStream.nextLine();
                 String[] values = line.split(";");
-                // this adds the currently parsed line to the 2-dimensional string array
                 Customer customer = createCustomer(values);
                 customerContainer.add(customer);
             }

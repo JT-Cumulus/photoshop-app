@@ -77,6 +77,10 @@ public class Days {
         return new Days(dayNumber, name, openFrom, openTill);
     }
 
+    public static String dateToString(LocalDate date){
+        return date.toString();
+    }
+
     public static List<Days> loadDays(){
         List<Days> openingsTimes = new LinkedList<Days>();
         String fileName= "database/PhotoShop_OpeningHours.csv";

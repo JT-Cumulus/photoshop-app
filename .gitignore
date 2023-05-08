@@ -27,5 +27,7 @@ replay_pid*
 old/
 
 # invoices
-database/PhotoShop_Orders.csv
 invoices/
+database/PhotoShop_Orders.csv
+user/PhotoShop_Customers.csv
+user/PhotoShop_Employees.csv

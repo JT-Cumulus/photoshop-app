@@ -7,6 +7,7 @@ import static java.time.temporal.ChronoUnit.DAYS;
 import java.util.List;
 import java.util.Scanner;
 
+import repository.UserHandler;
 import service.Catalogue;
 import service.Days;
 import service.Item;
@@ -17,6 +18,7 @@ public class Main {
     // First instance catalogue so daily catalogue can be loaded in
     static Catalogue catalogue = new Catalogue();
     static ShoppingCart cart = new ShoppingCart();
+    static UserHandler users = new UserHandler();
     static Scanner scan = new Scanner(System.in);
 
     // Load in Opening Times of the shop
@@ -99,8 +101,8 @@ public class Main {
             Item item = catalogue.getItem(choice);
             cart.addItem(item);
             System.out.print("You have added: " + item.getName());
-            System.out.print("\nTo add another item type: 'c'");
-            System.out.print("\nTo finalise your purchase type: 'b");
+            System.out.print("\nTo add another item type 'c' ");
+            System.out.print("\nTo finalise your purchase type 'b': ");
             status = scan.next();
 
             // Check if user wants to make purchase
@@ -117,6 +119,7 @@ public class Main {
         int workingDaysNeeded = calculatePickup(cart.getTotalTime());
         LocalDate dateNow = LocalDate.now();
         LocalDate finalDate = dateNow.plus(workingDaysNeeded, DAYS);
+        cart.setPickupDate(finalDate);
         System.out.println("Order can be picked up on: " + finalDate);
         userLocation = -1;
     }
