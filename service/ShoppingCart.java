@@ -25,7 +25,6 @@ public class ShoppingCart extends Catalogue{
     public ShoppingCart(){
         this.orderID = loadItems();
         this.currentCart = new LinkedList<>();
-        this.orderID += 1;
         this.totalPrice = 0;
         this.totalTimeTaken = 0;
     }
@@ -58,7 +57,7 @@ public class ShoppingCart extends Catalogue{
             e.printStackTrace();
         }
 
-        return id;
+        return id + 1;
     }
 
     // Return the item within the cart such that the quantity can be updated in the shopping cart
