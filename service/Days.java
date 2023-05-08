@@ -3,6 +3,8 @@ package service;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.LinkedList;
@@ -115,6 +117,11 @@ public class Days {
         Calendar c = Calendar.getInstance();
         c.setTime(c.getTime());
         return c.get(Calendar.DAY_OF_WEEK);
+    }
+
+    public static String getDateToday(){
+        String dateNow = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));;
+        return dateNow;
     }
     
     public String toString(){
