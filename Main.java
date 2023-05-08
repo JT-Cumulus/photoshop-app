@@ -1,10 +1,9 @@
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.time.Instant;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
+import static java.time.temporal.ChronoUnit.MINUTES;
 import java.util.List;
 import java.util.Scanner;
 
@@ -39,10 +38,8 @@ public class Main {
         // Load daily prices
         loadItems();
 
-        Days.displayOpeningTimes(openingTimes);
-
         // Set quit condition for terminating application
-        while (userLocation != -1){
+        while (userLocation > -1){
             // Check for user input
             int option = userNavigation();
 
@@ -98,7 +95,7 @@ public class Main {
         String status = "c";
         while (status.equals("c")) {
             System.out.print("\nPlease choose an integer between 1 - " + catalogue.getLength() + ": ");
-            int choice = scan.nextInt() + 1;
+            int choice = scan.nextInt() - 1;
             Item item = catalogue.getItem(choice);
             cart.addItem(item);
             System.out.print("You have added " + item.getName());
@@ -108,7 +105,6 @@ public class Main {
             // Check if user wants to make purchase
             if (status.equals("b")){
                 userLocation = 2;
-                cart.saveCart(cart);
                 //cart.exportJson();
             }
         }
@@ -117,6 +113,7 @@ public class Main {
     public static void checkOrder(){
         cart.displayCart();
         System.out.println(calculatePickup(cart.getTotalTime()));
+        userLocation = -1;
     }
 
     public static void checkInvoice(){
@@ -146,7 +143,6 @@ public class Main {
 
         return new Item(id, name, price, hours);
     }
-
 
     private static int toMins(String s) {
     /**
@@ -191,13 +187,23 @@ public class Main {
 
 
 public static int calculatePickup(Long totalWorkDuration){
-    long timeNow = Instant.now().toEpochMilli();
+    LocalTime timeNow = LocalTime.now();
     long workDuration = totalWorkDuration;
-    //System.out.println(timeNow.plus(workDuration, ChronoUnit.MINUTES));
     int currentDay = Days.calculateDayOfWeek();
-    openingTimes.get(currentDay).getOpenTill().minus(timeNow, ChronoUnit.MINUTES);
-    workDuration =- (currentDay);
     int daysTaken = 0;
+
+    // get time left in the day until closing hour
+    long timeLeft = timeNow.until(openingTimes.get(currentDay).getOpenTill(), MINUTES);
+    
+    // subtract time left of today from total working time, go to next day
+    workDuration = workDuration - timeLeft;
+    daysTaken ++;
+    if(currentDay < 7){
+        currentDay++;
+    } else {
+        currentDay = 1;
+    }
+
     if (currentDay != 0){
         while(workDuration > 0 && currentDay != 0){
             // Start now and cycle through days of the week csv
