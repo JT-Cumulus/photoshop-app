@@ -92,11 +92,11 @@ public class ShoppingCart extends Catalogue{
 
     // Display purchased items in cart and print total price
     public void displayCart(){
-        System.out.println(String.format("%-5s %-30s %15s %20s %30s" , "ID", "Item", "Price(EUR)", "Time to Make (min)", "Quantity" ));
+        System.out.println(String.format("%-5s %-30s %15s %20s %10s" , "ID", "Item", "Price(EUR)", "Time to Make (min)", "Quantity"));
         for (Item object: this.currentCart) {
             this.totalPrice += object.getPrice() * object.getQuantity();
             this.totalTimeTaken += object.getMinutes() * object.getQuantity();
-            System.out.println(object + "\t\t" + object.getQuantity());
+            System.out.println(object + "\t   " + object.getQuantity());
         }
         System.out.println("Total Price: " + this.returnTotalPrice() + " EUR");
         //System.out.println("Total Time Required: " + ((this.totalTimeTaken / 60) / 24 + " days"));

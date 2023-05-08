@@ -1,9 +1,10 @@
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.time.LocalDate;
 import java.time.LocalTime;
-import java.time.temporal.ChronoUnit;
 import static java.time.temporal.ChronoUnit.MINUTES;
+import static java.time.temporal.ChronoUnit.DAYS;
 import java.util.List;
 import java.util.Scanner;
 
@@ -112,7 +113,10 @@ public class Main {
 
     public static void checkOrder(){
         cart.displayCart();
-        System.out.println(calculatePickup(cart.getTotalTime()));
+        int workingDaysNeeded = calculatePickup(cart.getTotalTime());
+        LocalDate dateNow = LocalDate.now();
+        LocalDate finalDate = dateNow.plus(workingDaysNeeded, DAYS);
+        System.out.println("Order can be picked up on: " + finalDate);
         userLocation = -1;
     }
 
@@ -185,8 +189,7 @@ public class Main {
         System.out.println(catalogue.toString());
     }
 
-
-public static int calculatePickup(Long totalWorkDuration){
+    public static int calculatePickup(Long totalWorkDuration){
     LocalTime timeNow = LocalTime.now();
     long workDuration = totalWorkDuration;
     int currentDay = Days.calculateDayOfWeek() - 1;
