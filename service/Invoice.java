@@ -41,7 +41,9 @@ public class Invoice {
         this.soldCart = shoppingCart;
      }
      
-     public static displayInvoice(){
+     public void displayInvoice(){
         this.soldEmployee.getFirstName();
+
+        this.soldCart.displayCart();
      }
 }

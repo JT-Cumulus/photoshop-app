@@ -53,7 +53,7 @@ public class Main {
                 // Add item to shopping cart here
                 purchaseMenu();
 
-                // Print order details
+                // Print order details - provide date for order pickup
                 case 2:
                 checkOrder();
 
@@ -69,8 +69,6 @@ public class Main {
 
         }
         
-        // Pickup time provided for the day the pickup is allowed
-
         // Close scanner at end
         scan.close();
     }
