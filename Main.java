@@ -7,6 +7,7 @@ import static java.time.temporal.ChronoUnit.DAYS;
 import java.util.List;
 import java.util.Scanner;
 
+import repository.Employee;
 import repository.UserHandler;
 import service.Catalogue;
 import service.Days;
@@ -32,7 +33,10 @@ public class Main {
     // -1 = Quit condition (exit the program)
 
     static int userLocation = 0;
+    static int activeEmployee = 0;
     public static void main(String[] args) {
+        // Check which employee is working
+        // activeEmployee = UserHandler.checkEmployee();
 
         // Main store menu
         shopMenu();

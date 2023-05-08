@@ -116,7 +116,9 @@ public class ShoppingCart extends Catalogue{
         CSVWriter writer = new CSVWriter(outputfile, ';', CSVWriter.NO_QUOTE_CHARACTER, CSVWriter.DEFAULT_ESCAPE_CHARACTER, CSVWriter.DEFAULT_LINE_END);
   
         // add data to csv
-        String[] data = {cart.orderID.toString(), Days.getDateToday(), Days.dateToString(cart.pickupDate)};
+        String[] data = {cart.orderID.toString(), Days.getDateToday()
+            //, Days.dateToString(cart.pickupDate)
+        };
         writer.writeNext(data);
   
         // closing writer connection
