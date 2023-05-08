@@ -106,7 +106,8 @@ public class Main {
             // Check if user wants to make purchase
             if (status.equals("b")){
                 userLocation = 2;
-                //cart.exportJson();
+                cart.saveCart(cart);
+                cart.exportJson();
             }
         }
     }
@@ -212,7 +213,7 @@ public class Main {
         while(workDuration > 0 && currentDay != 1){
             if (currentDay == 7){
                 if(workDuration - openingTimes.get(6).getWorkingMinutes() < 0){
-                    break;
+                    return daysTaken;
                 }
                 workDuration -= openingTimes.get(6).getWorkingMinutes();
                 daysTaken++;
@@ -221,7 +222,7 @@ public class Main {
             // Start now and cycle through days of the week csv
             for(int i = currentDay; i < openingTimes.size(); i++){
                 if(workDuration - openingTimes.get(i).getWorkingMinutes() < 0){
-                    break;
+                    return daysTaken;
                 }
                 workDuration -= openingTimes.get(i).getWorkingMinutes();
                 if(currentDay < 7){
