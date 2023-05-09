@@ -15,6 +15,9 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.opencsv.CSVWriter;
 
+import repository.Customer;
+import repository.Employee;
+
 // Store current items placed in shopping cart
 public class ShoppingCart extends Catalogue{
     
@@ -104,38 +107,37 @@ public class ShoppingCart extends Catalogue{
         System.out.println("Total Time Required: " + ((this.totalTimeTaken / 60) + " working hours"));
     }
 
-    public void saveCart(ShoppingCart cart){
-    // first create file object for file placed at location
-    // specified by filepath
-    try {
-        // create FileWriter object with file as parameter
-        Writer outputfile;
-        outputfile = new BufferedWriter(new FileWriter("./database/PhotoShop_Orders.csv", true));
-  
-        // create CSVWriter object filewriter object as parameter
-        CSVWriter writer = new CSVWriter(outputfile, ';', CSVWriter.NO_QUOTE_CHARACTER, CSVWriter.DEFAULT_ESCAPE_CHARACTER, CSVWriter.DEFAULT_LINE_END);
-  
-        // add data to csv
-        String[] data = {cart.orderID.toString(), Days.getDateToday(), Days.dateToString(cart.pickupDate)};
-        writer.writeNext(data);
-  
-        // closing writer connection
-        writer.close();
-    }
-    catch (IOException e) {
-        // TODO Auto-generated catch block
-        e.printStackTrace();
+    public void saveCart(ShoppingCart cart, Employee employee, Customer customer){
+        try {
+            // create FileWriter object with file as parameter
+            Writer outputfile;
+            outputfile = new BufferedWriter(new FileWriter("./database/PhotoShop_Orders.csv", true));
+    
+            // create CSVWriter object filewriter object as parameter
+            CSVWriter writer = new CSVWriter(outputfile, ';', CSVWriter.NO_QUOTE_CHARACTER, CSVWriter.DEFAULT_ESCAPE_CHARACTER, CSVWriter.DEFAULT_LINE_END);
+    
+            // add data to csv
+            String[] data = {
+                cart.orderID.toString(), 
+                Integer.toString(customer.getID()),
+                Days.getDateToday(), 
+                Days.dateToString(cart.pickupDate),
+                Integer.toString(employee.getEmployeeId())};
+            writer.writeNext(data);
+    
+            // closing writer connection
+            writer.close();
         }
-    }
+        catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+            }
+        }
 
     // Print the total price as a string with two decimals
     public String returnTotalPrice(){
         String price = String.format(java.util.Locale.US,"%.2f", this.totalPrice);
         return price;
-    }
-
-    public long getTotalTime(){
-        return this.totalTimeTaken;
     }
 
     // Export purchase to .json file

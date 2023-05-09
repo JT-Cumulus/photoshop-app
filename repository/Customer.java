@@ -27,6 +27,17 @@ public class Customer {
         this.mobile = mobile;
     }
 
+    public Customer(Customer source) {
+        this.ID = source.ID;
+        this.firstName = source.firstName;
+        this.lastName = source.lastName;
+        this.address = source.address;
+        this.postcode = source.postcode;
+        this.city = source.city;
+        this.email = source.email;
+        this.mobile = source.mobile;
+    }
+
     private static Customer createCustomer(String[] metadata) {
         int id = Integer.parseInt(metadata[0]);
         String firstName = metadata[1];
@@ -59,6 +70,11 @@ public class Customer {
             e.printStackTrace();
         }
         return customerContainer;
+    }
+
+    @Override
+    public String toString(){
+        return String.format("%-5s %30s %30s %30s %10s %10s %20s %10s", this.ID, this.firstName, this.lastName, this.address, this.postcode, this.city, this.email, this.mobile);
     }
 
     public int getID() {

@@ -52,6 +52,11 @@ public class Employee{
         return EmployeeContainer;
     }
 
+    @Override
+    public String toString(){
+        return String.format("%-5s %30s %30s ", this.employeeId, this.firstName, this.lastName);
+    }
+
     public int getEmployeeId() {
         return this.employeeId;
     }

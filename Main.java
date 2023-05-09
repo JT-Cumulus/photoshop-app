@@ -7,6 +7,7 @@ import static java.time.temporal.ChronoUnit.DAYS;
 import java.util.List;
 import java.util.Scanner;
 
+import repository.Customer;
 import repository.Employee;
 import repository.UserHandler;
 import service.Catalogue;
@@ -25,12 +26,15 @@ public class Main {
     // Load in Opening Times of the shop
     static List<Days> openingTimes = Days.loadDays();
 
+    // Tracker for user location in navigation
+    static int userLocation = 0;
+
     public static void main(String[] args) {
 
-        // Declare user location in navigation and id of employer
-        int userLocation = 0;
-        System.out.println("Please select your employee ID");
-        Employee currentEmployee = users.getEmployee(userNavigation());
+        // Declare id of employer
+        users.displayEmployees();
+        System.out.println("Please select your employee ID: ");
+        Employee currentEmployee = users.getEmployee(userNavigation() - 1);
 
         // Main store menu
         shopMenu();
@@ -49,7 +53,7 @@ public class Main {
                 displayCatalogue();
 
                 // Add item to shopping cart here
-                purchaseMenu();
+                purchaseMenu(currentEmployee);
 
                 // Print order details - provide date for order pickup
                 case 2:
@@ -88,7 +92,7 @@ public class Main {
     }
 
     //Function for making purchase
-    public static void purchaseMenu(){
+    public static void purchaseMenu(Employee employee){
 
         String status = "c";
         while (status.equals("c")) {
@@ -104,15 +108,40 @@ public class Main {
             // Check if user wants to make purchase
             if (status.equals("b")){
                 checkOrder();
-                cart.saveCart(cart);
+                cart.saveCart(cart, employee);
                 cart.exportJson();
             }
         }
     }
 
+    public static Customer customerEntry(){
+        System.out.println("Existing customer, new customer or guest?");
+        System.out.println("Select 1 for return customer");
+        System.out.println("Select 2 for new customer");
+        System.out.println("Select 3 for guest");
+
+        int userChoice = userNavigation();
+        switch(userChoice){
+            case 1:
+            users.displayCustomers();
+            System.out.println("Please select the customer id: ");
+            int option = userNavigation();
+            Customer customer = users.getCustomer(option)
+            return customer;
+            
+            case 2:
+
+            Customer.createCustomer();
+
+            case 3:
+            Customer guest = users.getCustomer(1);
+        }
+    }
+
+    // Function to check order for customer
     public static void checkOrder(){
         cart.displayCart();
-        int workingDaysNeeded = calculatePickup(cart.getTotalTime());
+        int workingDaysNeeded = calculatePickup(cart.getTotalTimeTaken());
         LocalDate dateNow = LocalDate.now();
         LocalDate finalDate = dateNow.plus(workingDaysNeeded, DAYS);
         cart.setPickupDate(finalDate);
@@ -149,10 +178,6 @@ public class Main {
     }
 
     private static int toMins(String s) {
-    /**
-     * @param s H:m timestamp, i.e. [Hour in day (0-23)]:[Minute in hour (0-59)]
-     * @return total minutes after 00:00
-     */
         String[] hourMin = s.split(":");
         int hour = Integer.parseInt(hourMin[0]);
         int mins = Integer.parseInt(hourMin[1]);
@@ -183,68 +208,70 @@ public class Main {
         }
     }
 
+    // TODO move this to catalogue class
     public static void displayCatalogue(){
         // Display the catalogue of items with the ID, price in euros, and time to complete the order
         System.out.println(String.format("%-5s %-30s %15s %20s" , "ID", "Item", "Price(EUR)", "Time to Make (min)"));
         System.out.println(catalogue.toString());
     }
 
+    // Function to iterate over day - can be in Days class?
     public static int calculatePickup(Long totalWorkDuration){
-    LocalTime timeNow = LocalTime.now();
-    long workDuration = totalWorkDuration;
-    int currentDay = Days.calculateDayOfWeek() - 1;
-    int daysTaken = 0;
+        LocalTime timeNow = LocalTime.now();
+        long workDuration = totalWorkDuration;
+        int currentDay = Days.calculateDayOfWeek() - 1;
+        int daysTaken = 0;
 
-    // get time left in the day until closing hour
-    long timeLeft = timeNow.until(openingTimes.get(currentDay).getOpenTill(), MINUTES);
-    
-    // subtract time left of today from total working time, go to next day
-    workDuration = workDuration - timeLeft;
-    daysTaken ++;
-    // interation of weekday; could potentially be a function, future refactoring
-    if(currentDay < 7){
-        currentDay++;
-    } else {
-        currentDay = 1;
-    }
+        // get time left in the day until closing hour
+        long timeLeft = timeNow.until(openingTimes.get(currentDay).getOpenTill(), MINUTES);
+        
+        // subtract time left of today from total working time, go to next day
+        workDuration = workDuration - timeLeft;
+        daysTaken ++;
+        // interation of weekday; could potentially be a function, future refactoring
+        if(currentDay < 7){
+            currentDay++;
+        } else {
+            currentDay = 1;
+        }
 
-    if (currentDay != 1){
-        while(workDuration > 0 && currentDay != 1){
-            if (currentDay == 7){
-                if(workDuration - openingTimes.get(6).getWorkingMinutes() < 0){
-                    return daysTaken;
-                }
-                workDuration -= openingTimes.get(6).getWorkingMinutes();
-                daysTaken++;
-                currentDay = 1;
-            }
-            // Start now and cycle through days of the week csv
-            for(int i = currentDay; i < openingTimes.size(); i++){
-                if(workDuration - openingTimes.get(i).getWorkingMinutes() < 0){
-                    return daysTaken;
-                }
-                workDuration -= openingTimes.get(i).getWorkingMinutes();
-                if(currentDay < 7){
-                    currentDay++;
-                } else {
+        if (currentDay != 1){
+            while(workDuration > 0 && currentDay != 1){
+                if (currentDay == 7){
+                    if(workDuration - openingTimes.get(6).getWorkingMinutes() < 0){
+                        return daysTaken;
+                    }
+                    workDuration -= openingTimes.get(6).getWorkingMinutes();
+                    daysTaken++;
                     currentDay = 1;
                 }
+                // Start now and cycle through days of the week csv
+                for(int i = currentDay; i < openingTimes.size(); i++){
+                    if(workDuration - openingTimes.get(i).getWorkingMinutes() < 0){
+                        return daysTaken;
+                    }
+                    workDuration -= openingTimes.get(i).getWorkingMinutes();
+                    if(currentDay < 7){
+                        currentDay++;
+                    } else {
+                        currentDay = 1;
+                    }
+                    daysTaken++;
+                }
+            }
+        }
+
+        while(workDuration > 0){
+            // Start now and cycle through days of the week csv
+            for(Days day : openingTimes){
+                if(workDuration - day.getWorkingMinutes() < 0){
+                    return daysTaken;
+                }
+                workDuration -= day.getWorkingMinutes();
                 daysTaken++;
             }
         }
+        return daysTaken;
     }
-
-    while(workDuration > 0){
-        // Start now and cycle through days of the week csv
-        for(Days day : openingTimes){
-            if(workDuration - day.getWorkingMinutes() < 0){
-                return daysTaken;
-            }
-            workDuration -= day.getWorkingMinutes();
-            daysTaken++;
-        }
-    }
-    return daysTaken;
-}
 
 }
