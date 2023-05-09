@@ -108,7 +108,8 @@ public class Main {
             // Check if user wants to make purchase
             if (status.equals("b")){
                 checkOrder();
-                cart.saveCart(cart, employee);
+                Customer saveCustomer = customerEntry();
+                cart.saveCart(cart, employee, saveCustomer);
                 cart.exportJson();
             }
         }
@@ -126,16 +127,19 @@ public class Main {
             users.displayCustomers();
             System.out.println("Please select the customer id: ");
             int option = userNavigation();
-            Customer customer = users.getCustomer(option)
+            Customer customer = users.getCustomer(option);
             return customer;
             
             case 2:
-
-            Customer.createCustomer();
+            Customer newCustomer = users.makeNewCustomer();
+            return newCustomer;
 
             case 3:
             Customer guest = users.getCustomer(1);
+            return guest;
         }
+
+        return null;
     }
 
     // Function to check order for customer

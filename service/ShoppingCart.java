@@ -119,7 +119,7 @@ public class ShoppingCart extends Catalogue{
             // add data to csv
             String[] data = {
                 cart.orderID.toString(), 
-                Integer.toString(customer.getID()),
+                Integer.toString(customer.getID() - 1),
                 Days.getDateToday(), 
                 Days.dateToString(cart.pickupDate),
                 Integer.toString(employee.getEmployeeId())};
@@ -165,7 +165,6 @@ public class ShoppingCart extends Catalogue{
         }
         return temp;
     }
- 
     
     public void setCurrentCart(List<Item> currentCart) {
         this.currentCart = currentCart;
