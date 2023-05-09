@@ -12,5 +12,8 @@ public class UserHandler {
         this.employeeList = Employee.loadEmployees();
     }
 
-    
+    public Employee getEmployee(int index){
+
+        return new Employee(employeeList.get(index));
+    }
 }

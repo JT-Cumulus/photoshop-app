@@ -17,6 +17,12 @@ public class Employee{
         this.lastName = lastName;
     }
 
+    public Employee(Employee source){
+        this.employeeId = source.employeeId;
+        this.firstName = source.firstName;
+        this.lastName = source.lastName;
+    }
+
     private static Employee createEmployee(String[] metadata) {
         int id = Integer.parseInt(metadata[0]);
         String firstName = metadata[1];

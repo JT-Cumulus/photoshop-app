@@ -7,6 +7,7 @@ import static java.time.temporal.ChronoUnit.DAYS;
 import java.util.List;
 import java.util.Scanner;
 
+import repository.Employee;
 import repository.UserHandler;
 import service.Catalogue;
 import service.Days;
@@ -24,15 +25,12 @@ public class Main {
     // Load in Opening Times of the shop
     static List<Days> openingTimes = Days.loadDays();
 
-    // Userlocation variable to figure out where the user is in global navigation
-    // 0 = Welcome
-    // 1 = Purchase Menu
-    // 2 = Check order status (duration until done)
-    // 3 = See invoice detail (display full invoice)
-    // -1 = Quit condition (exit the program)
-
-    static int userLocation = 0;
     public static void main(String[] args) {
+
+        // Declare user location in navigation and id of employer
+        int userLocation = 0;
+        System.out.println("Please select your employee ID");
+        Employee currentEmployee = users.getEmployee(userNavigation());
 
         // Main store menu
         shopMenu();
