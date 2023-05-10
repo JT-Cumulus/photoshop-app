@@ -50,7 +50,7 @@ public class Main {
             switch(option){
                 // Print catalogue here
                 case 1:
-                displayCatalogue();
+                catalogue.printCatalogue();
 
                 // Add item to shopping cart here
                 purchaseMenu(currentEmployee);
@@ -213,13 +213,6 @@ public class Main {
         }catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-    }
-
-    // TODO move this to catalogue class
-    public static void displayCatalogue(){
-        // Display the catalogue of items with the ID, price in euros, and time to complete the order
-        System.out.println(String.format("%-5s %-30s %15s %20s" , "ID", "Item", "Price(EUR)", "Time to Make (min)"));
-        System.out.println(catalogue.toString());
     }
 
     // Function to iterate over day - can be in Days class?

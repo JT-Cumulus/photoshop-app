@@ -28,12 +28,13 @@ public class Catalogue {
         return this.items.size();
     }
 
-    public String toString() {
+    public void printCatalogue() {
+        System.out.println(String.format("%-5s %-30s %15s %20s" , "ID", "Item", "Price(EUR)", "Time to Make (min)"));
         String temp = "";
         for (Item item : items) {
             temp += item.toString() + "\n";
         }
-        return temp;
+        System.out.println(temp);
     }
     
 }
