@@ -40,7 +40,7 @@ public class ShoppingCart{
     public List<String> getCart(){
         ArrayList<String> container = new ArrayList<String>();
         container.add(Integer.toString(orderID));
-        container.add(this.currentCart.toString());
+        container.add(convertString());
         container.add(Double.toString(totalPrice));
         container.add(Long.toString(totalTimeTaken));
         container.add(pickupDate.format(DateTimeFormatter.ofPattern("yyyy/MM/dd")));
@@ -149,11 +149,11 @@ public class ShoppingCart{
         return price;
     }
 
-    // Function for iterating over items in shopping cart for invoice purposes
+    // Function for iterating over items in shopping cart for invoice purposes TODO
     public String convertString(){
         String temp = "";
         for(Item items : this.currentCart){
-            temp += items.getId() + ";" + items.getQuantity() + ";" + items.getPrice() + ";";
+            temp += items.getId() + ";" + items.getQuantity() + ";" + items.getPrice() + ",\n";
         }
         return temp;
     }
