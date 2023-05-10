@@ -157,6 +157,10 @@ public class ShoppingCart{
         }
         return temp;
     }
+
+    public List<Item> getCurrentCart(){
+        return this.currentCart;
+    }
     
     public void setCurrentCart(List<Item> currentCart) {
         this.currentCart = currentCart;

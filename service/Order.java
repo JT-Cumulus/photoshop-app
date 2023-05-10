@@ -22,7 +22,7 @@ public class Order {
     }
 
     public Order(ShoppingCart cart){
-        this.currentOrder = cart.getCart();
+        this.currentOrder = cart.getCurrentCart();
         this.orderID = cart.getOrderID();
         this.totalPrice = cart.getTotalPrice();
         this.totalTimeTaken = cart.getTotalTimeTaken();
@@ -59,7 +59,7 @@ public class Order {
 
     public Order retrieveOrder(int orderID){
         String[] values = findOrder(orderID);
-        
+
     }
     
 }
