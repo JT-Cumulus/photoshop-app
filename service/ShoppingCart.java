@@ -19,7 +19,7 @@ import repository.Customer;
 import repository.Employee;
 
 // Store current items placed in shopping cart
-public class ShoppingCart extends Catalogue{
+public class ShoppingCart{
     
     private List<Item> currentCart;
     private Integer orderID;

@@ -38,15 +38,15 @@ public class Invoice {
 
     private Employee soldEmployee;
     private Customer soldCustomer;
-    private ShoppingCart soldCart;
+    private Order soldOrder;
 
      public Invoice(Employee employee, Customer customer, ShoppingCart shoppingCart){
         this.soldEmployee = employee;
         this.soldCustomer = customer;
-        this.soldCart = shoppingCart;
+        this.soldOrder = new Order(shoppingCart);
      }
 
-     public String[] findOrder(int orderID){
+   public String[] findOrder(int orderID){
       String fileName = "database/PhotoShop_Orders.csv";
       File file = new File(fileName);
 
