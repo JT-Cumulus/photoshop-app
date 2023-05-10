@@ -37,7 +37,7 @@ public class Main {
         shopMenu();
 
         // Load daily prices
-        loadItems();
+        catalogue = Item.loadItems(catalogue);
 
         // Set quit condition for terminating application
         while (userLocation > -1){
@@ -73,6 +73,19 @@ public class Main {
         
         // Close scanner at end
         scan.close();
+    }
+
+    // Function for user navigation
+    public static int userNavigation(){
+        int userChoice = 0;
+        while (userChoice < 1){
+            try {
+                userChoice = scan.nextInt();
+            } catch(Exception e) { 
+                System.out.println("Invalid input, try again");
+            }
+        }
+        return userChoice;
     }
 
     // Function displaying the shop menu for user navigation
@@ -140,6 +153,7 @@ public class Main {
 
             case 3:
             Customer guest = users.getCustomer(1);
+            guest.setID(1);
             return guest;
         }
 
@@ -166,59 +180,7 @@ public class Main {
 
     }
 
-    // Function for user navigation
-    public static int userNavigation(){
-        int userChoice = 0;
-        while (userChoice < 1){
-            try {
-                userChoice = scan.nextInt();
-            } catch(Exception e) { 
-                System.out.println("Invalid input, try again");
-            }
-        }
-        return userChoice;
-    }
-
-    // Function to break up items 
-    private static Item createItem(String[] metadata) {
-        int id = Integer.parseInt(metadata[0]);
-        String name = metadata[1];
-        double price = Double.parseDouble(metadata[2]);
-        int hours = toMins(metadata[3]);
-
-        return new Item(id, name, price, hours);
-    }
-
-    private static int toMins(String s) {
-        String[] hourMin = s.split(":");
-        int hour = Integer.parseInt(hourMin[0]);
-        int mins = Integer.parseInt(hourMin[1]);
-        int hoursInMins = hour * 60;
-        return hoursInMins + mins;
-    }
-
-    // Load items from pricelist csv
-    public static void loadItems(){
-        String fileName = "database/PhotoShop_PriceList.csv";
-        File file = new File(fileName);
-
-        // this gives you a 2-dimensional array of strings
-        Scanner inputStream;
-
-        try{
-            inputStream = new Scanner(file);
-            while(inputStream.hasNext()){
-                String line = inputStream.nextLine();
-                String[] values = line.split(";");
-                // this adds the currently parsed line to the 2-dimensional string array
-                Item items = createItem(values);
-                catalogue.addItem(items);
-            }
-            inputStream.close();
-        }catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-    }
+    
 
     
 

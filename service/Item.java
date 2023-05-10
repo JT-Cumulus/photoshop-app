@@ -1,5 +1,9 @@
 package service;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+
 // For items in the catalogue
 // With ID, name, price for the item
 public class Item {
@@ -73,6 +77,51 @@ public class Item {
 
     public void addQuantity(){
         this.quantity += 1;
+    }
+
+    
+
+    // Function to break up items 
+    private static Item createItem(String[] metadata) {
+        int id = Integer.parseInt(metadata[0]);
+        String name = metadata[1];
+        double price = Double.parseDouble(metadata[2]);
+        int hours = toMins(metadata[3]);
+
+        return new Item(id, name, price, hours);
+    }
+
+    private static int toMins(String s) {
+        String[] hourMin = s.split(":");
+        int hour = Integer.parseInt(hourMin[0]);
+        int mins = Integer.parseInt(hourMin[1]);
+        int hoursInMins = hour * 60;
+        return hoursInMins + mins;
+    }
+
+    // Load items from pricelist csv
+    public static Catalogue loadItems(Catalogue catalogue){
+        String fileName = "database/PhotoShop_PriceList.csv";
+        File file = new File(fileName);
+
+        // this gives you a 2-dimensional array of strings
+        Scanner inputStream;
+
+        try{
+            inputStream = new Scanner(file);
+            while(inputStream.hasNext()){
+                String line = inputStream.nextLine();
+                String[] values = line.split(";");
+                // this adds the currently parsed line to the 2-dimensional string array
+                Item items = createItem(values);
+                catalogue.addItem(items);
+            }
+            inputStream.close();
+        }catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        return catalogue;
     }
 
     public String toString() {
