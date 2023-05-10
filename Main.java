@@ -120,9 +120,9 @@ public class Main {
 
         System.out.println(menuDivider);
         System.out.println("Existing customer, new customer or guest?");
-        System.out.println("Select 1 for return customer");
-        System.out.println("Select 2 for new customer");
-        System.out.println("Select 3 for guest");
+        System.out.println("Press 1 - for return customer");
+        System.out.println("Press 2 - for new customer");
+        System.out.println("Press 3 - for guest");
         System.out.println(menuDivider);
 
         int userChoice = userNavigation();
