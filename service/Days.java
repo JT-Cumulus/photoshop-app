@@ -128,11 +128,68 @@ public class Days {
         c.setTime(c.getTime());
         return c.get(Calendar.DAY_OF_WEEK);
     }
+
+    // Function to iterate over day - can be in Days class?
+    public static int calculatePickup(Long totalWorkDuration, List<Days> openingTimes){
+        LocalTime timeNow = LocalTime.now();
+        long workDuration = totalWorkDuration;
+        int currentDay = Days.calculateDayOfWeek() - 1;
+        int daysTaken = 0;
+
+        // get time left in the day until closing hour
+        long timeLeft = timeNow.until(openingTimes.get(currentDay).getOpenTill(), MINUTES);
+        
+        // subtract time left of today from total working time, go to next day
+        workDuration = workDuration - timeLeft;
+        daysTaken ++;
+        // interation of weekday; could potentially be a function, future refactoring
+        if(currentDay < 7){
+            currentDay++;
+        } else {
+            currentDay = 1;
+        }
+
+        if (currentDay != 1){
+            while(workDuration > 0 && currentDay != 1){
+                if (currentDay == 7){
+                    if(workDuration - openingTimes.get(6).getWorkingMinutes() < 0){
+                        return daysTaken;
+                    }
+                    workDuration -= openingTimes.get(6).getWorkingMinutes();
+                    daysTaken++;
+                    currentDay = 1;
+                }
+                // Start now and cycle through days of the week csv
+                for(int i = currentDay; i < openingTimes.size(); i++){
+                    if(workDuration - openingTimes.get(i).getWorkingMinutes() < 0){
+                        return daysTaken;
+                    }
+                    workDuration -= openingTimes.get(i).getWorkingMinutes();
+                    if(currentDay < 7){
+                        currentDay++;
+                    } else {
+                        currentDay = 1;
+                    }
+                    daysTaken++;
+                }
+            }
+        }
+
+        while(workDuration > 0){
+            // Start now and cycle through days of the week csv
+            for(Days day : openingTimes){
+                if(workDuration - day.getWorkingMinutes() < 0){
+                    return daysTaken;
+                }
+                workDuration -= day.getWorkingMinutes();
+                daysTaken++;
+            }
+        }
+        return daysTaken;
+    }
     
     public String toString(){
         return String.format("%-30s %15s %15s" , this.day, this.openFrom, this.openTill );
     }
-
-
 
 }

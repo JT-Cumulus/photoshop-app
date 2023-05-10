@@ -119,7 +119,7 @@ public class ShoppingCart extends Catalogue{
             // add data to csv
             String[] data = {
                 cart.orderID.toString(), 
-                Integer.toString(customer.getID() - 1),
+                Integer.toString(customer.getID()),
                 Days.getDateToday(), 
                 Days.dateToString(cart.pickupDate),
                 Integer.toString(employee.getEmployeeId())};
