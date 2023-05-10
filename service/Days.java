@@ -78,7 +78,13 @@ public class Days {
     }
 
     public static String dateToString(LocalDate date){
-        return date.toString();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+        String formattedString = date.format(formatter);
+        return formattedString;
+    }
+
+    public static String getDateToday(){
+        return LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
     }
 
     public static List<Days> loadDays(){
@@ -121,11 +127,6 @@ public class Days {
         Calendar c = Calendar.getInstance();
         c.setTime(c.getTime());
         return c.get(Calendar.DAY_OF_WEEK);
-    }
-
-    public static String getDateToday(){
-        String dateNow = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));;
-        return dateNow;
     }
     
     public String toString(){
