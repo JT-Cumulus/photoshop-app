@@ -132,6 +132,7 @@ public class Main {
         }
     }
 
+    // Function for entering customer information
     public static Customer customerEntry(){
         String menuDivider = "---------------------------";
 

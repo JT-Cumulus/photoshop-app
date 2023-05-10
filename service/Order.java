@@ -29,6 +29,7 @@ public class Order {
         this.pickupDate = cart.getPickupDate();
     }
 
+    // Find an order from its id within the invoices TODO
     public String[] findOrder(int orderID){
         String fileName = "database/PhotoShop_Orders.csv";
         File file = new File(fileName);
@@ -59,6 +60,7 @@ public class Order {
 
     public Order retrieveOrder(int orderID){
         String[] values = findOrder(orderID);
+        values[0] = ;
 
     }
     

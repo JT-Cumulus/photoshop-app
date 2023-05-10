@@ -79,8 +79,6 @@ public class Item {
         this.quantity += 1;
     }
 
-    
-
     // Function to break up items 
     private static Item createItem(String[] metadata) {
         int id = Integer.parseInt(metadata[0]);
