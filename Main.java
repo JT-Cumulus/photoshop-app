@@ -1,9 +1,13 @@
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.time.LocalDate;
 import static java.time.temporal.ChronoUnit.DAYS;
+
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.List;
 import java.util.Scanner;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import repository.Customer;
 import repository.Employee;
@@ -123,7 +127,7 @@ public class Main {
                 checkOrder();
                 Customer saveCustomer = customerEntry();
                 cart.saveCart(cart, employee, saveCustomer);
-                cart.exportJson();
+                exportJson(cart);
             }
         }
     }
@@ -177,11 +181,25 @@ public class Main {
     }
 
     public static void checkInvoice(){
+        System.out.println("Please enter your order ID: ");
+
+        int orderID = userNavigation();
 
     }
 
-    
-
-    
+    // Export purchase to .json file
+    public static void exportJson(ShoppingCart cart){
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        String orderNumber = Integer.toString(cart.getOrderID());
+  
+        // Java Object to a file
+        try (FileWriter writer = new FileWriter(
+                 "./invoices/order_" + orderNumber + ".json")) {
+            gson.toJson(cart.getCart(), writer);
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
 }

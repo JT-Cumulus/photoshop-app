@@ -29,11 +29,15 @@ public class Catalogue {
     }
 
     public void printCatalogue() {
+        String menuDivider = "---------------------------";
+
+        System.out.println(menuDivider);
         System.out.println(String.format("%-5s %-30s %15s %20s" , "ID", "Item", "Price(EUR)", "Time to Make (min)"));
         String temp = "";
         for (Item item : items) {
             temp += item.toString() + "\n";
         }
+        temp += menuDivider;
         System.out.println(temp);
     }
     

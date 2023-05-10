@@ -2,6 +2,7 @@ package service;
 
 import java.util.List;
 import java.util.Scanner;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -10,6 +11,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -35,8 +37,15 @@ public class ShoppingCart{
     }
 
     // Return the current cart
-    public List<Item> getCart(){
-        return this.currentCart;
+    public List<String> getCart(){
+        ArrayList<String> container = new ArrayList<String>();
+        container.add(Integer.toString(orderID));
+        container.add(this.currentCart.toString());
+        container.add(Double.toString(totalPrice));
+        container.add(Long.toString(totalTimeTaken));
+        container.add(pickupDate.format(DateTimeFormatter.ofPattern("yyyy/MM/dd")));
+
+        return container;
     }
 
     // Load items already saved as orders
@@ -138,23 +147,6 @@ public class ShoppingCart{
     public String returnTotalPrice(){
         String price = String.format(java.util.Locale.US,"%.2f", this.totalPrice);
         return price;
-    }
-
-    // Export purchase to .json file
-    public void exportJson(){
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        String orderNumber = Integer.toString(this.orderID);
-        // Java Object to String
-        // String json = gson.toJson(this.getCart());
-  
-        // Java Object to a file
-        try (FileWriter writer = new FileWriter(
-                 "./invoices/order_" + orderNumber + ".json")) {
-            gson.toJson(this.currentCart, writer);
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     // Function for iterating over items in shopping cart for invoice purposes
