@@ -30,8 +30,6 @@ public class Main {
     static int userLocation = 0;
 
     public static void main(String[] args) {
-        // Check which employee is working
-        // activeEmployee = UserHandler.checkEmployee();
 
         // Declare id of employer
         users.displayEmployees();
@@ -156,6 +154,9 @@ public class Main {
     }
 
     public static void checkInvoice(){
+        System.out.println("Please enter your order ID: ");
+
+        int order = scan.nextInt();
 
     }
 
