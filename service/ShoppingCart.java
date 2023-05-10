@@ -43,7 +43,7 @@ public class ShoppingCart extends Catalogue{
     public int loadItems(){
         String fileName = "database/PhotoShop_Orders.csv";
         File file = new File(fileName);
-        int id = 1;
+        int id = 0;
 
         // this gives you a 2-dimensional array of strings
         Scanner inputStream;

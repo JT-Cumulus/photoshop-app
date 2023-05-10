@@ -38,11 +38,6 @@ public class Main {
         System.out.println("Please select your employee ID: ");
         Employee currentEmployee = users.getEmployee(userNavigation() - 1);
 
-        // Declare id of employer
-        users.displayEmployees();
-        System.out.println("Please select your employee ID: ");
-        Employee currentEmployee = users.getEmployee(userNavigation() - 1);
-
         // Main store menu
         shopMenu();
 
