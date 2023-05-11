@@ -1,6 +1,8 @@
 package repository;
 
 import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
@@ -55,6 +57,34 @@ public class UserHandler {
         UserHandler.saveCustomer(newCustomer);
 
         return newCustomer;
+    }
+
+    // Find an order from its id within the invoices TODO
+    public String[] getInfo(int orderID){
+        String fileName = "./database/PhotoShop_orders.csv";
+        File file = new File(fileName);
+        int id = 0;
+        // this gives you a 2-dimensional array of strings
+        Scanner inputStream;
+        
+        try{
+            inputStream = new Scanner(file);
+            while(inputStream.hasNext()){
+                String line = inputStream.nextLine();
+                String[] values = line.split(",");
+                // this adds the currently parsed line to the 2-dimensional string array
+                id = Integer.parseInt(values[0]);
+                if(id == orderID){
+                    return values;
+                }
+
+            }
+            inputStream.close();
+            
+        }catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public static void saveCustomer(Customer newCustomer){
