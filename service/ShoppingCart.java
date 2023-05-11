@@ -152,7 +152,7 @@ public class ShoppingCart{
     public String convertString(){
         String temp = "";
         for(Item items : this.currentCart){
-            temp += items.getId() + ";" + items.getQuantity();
+            temp += items.getId() + ":" + items.getQuantity() + ";";
         }
         return temp;
     }

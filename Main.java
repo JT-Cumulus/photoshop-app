@@ -16,6 +16,7 @@ import service.Catalogue;
 import service.Days;
 import service.Invoice;
 import service.Item;
+import service.Order;
 import service.ShoppingCart;
 
 public class Main {
@@ -65,7 +66,8 @@ public class Main {
 
                 // Print invoice details / allow user to access order details from invoice no.
                 case 3:
-                checkInvoice();
+                Order oldOrder = new Order();
+                checkInvoice(oldOrder);
                 break;
 
                 // Exit program condition
@@ -183,22 +185,25 @@ public class Main {
         userLocation = -1;
     }
 
-    public static void checkInvoice(){
+    public static void checkInvoice(Order madeOrder){
         System.out.println("Please enter your order ID: ");
         int orderID = userNavigation();
-        String[] userInfo = users.getInfo(orderID);
-        Customer chosenCustomer = Customer.getID(Integer.parseInt(userInfo[1]));
+        //String[] userInfo = users.getInfo(orderID);
+        madeOrder.retrieveOrder(madeOrder.getOrder(orderID), catalogue);
+        System.out.println(madeOrder);
+       /*  Customer chosenCustomer = Customer.getID(Integer.parseInt(userInfo[1]));
         Employee chosenEmployee = Employee.getID(Integer.parseInt(userInfo[3]));
+
         
         Invoice invoice = new Invoice(chosenEmployee, chosenCustomer);
         
-        System.out.print(Invoice.findOrder());
+        System.out.print(Invoice.findOrder());*/
 
     }
 
     // Export purchase to .json file
     public static void exportJson(ShoppingCart cart){
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        Gson gson = new GsonBuilder().create();
         String orderNumber = Integer.toString(cart.getOrderID());
   
         // Java Object to a file

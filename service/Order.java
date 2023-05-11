@@ -2,10 +2,15 @@ package service;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.lang.ProcessBuilder.Redirect.Type;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
+
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
 
 public class Order {
     private List<Item> currentOrder;
@@ -22,13 +27,18 @@ public class Order {
         this.pickupDate = pickupDate;
     }
 
-    public Order(ArrayList<String> arrayList){
-        this.currentOrder = arrayList.get(0);
-        this.orderID = arrayList.get(0);
-        this.totalPrice = arrayList.get(0);
-        this.totalTimeTaken = arrayList.get(0);
-        this.pickupDate = arrayList.get(0);
+    public Order(){
+
     }
+
+    /*
+    public Order(ArrayList<String> arrayList){
+        this.orderID = Integer.parseInt(arrayList.get(0));
+        this.currentOrder = new List<Item>(Arrays.asList(arrayList.get(1).split(";")));
+        this.totalPrice = Double.parseDouble(arrayList.get(2));
+        this.totalTimeTaken = Long.parseLong(arrayList.get(3));
+        this.pickupDate = LocalDate.parse(arrayList.get(4));
+    }*/
 
     // Find an order from its id within the invoices TODO
     public ArrayList<String> getOrder(int orderID){
@@ -40,6 +50,7 @@ public class Order {
         ArrayList<String> cob = new ArrayList<>();
         try{
             inputStream = new Scanner(file);
+
             while(inputStream.hasNext()){
                 String line = inputStream.nextLine();
                 String[] values = line.split(",");
@@ -54,10 +65,21 @@ public class Order {
         return cob;
     }
 
-    public Order retrieveOrder(int orderID){
-        String[] values = findOrder(orderID);
-        int id = Integer.getInteger(values[0]);
-        
+    public void retrieveOrder(ArrayList<String> arrayList, Catalogue catalogue){
+        this.orderID = Integer.parseInt(arrayList.get(0));
+        List<String> container = Arrays.asList(arrayList.get(1).split(";"));
+        List<Item> temp = new ArrayList<Item>();
+        for (String line : container){
+            List<String> indexAndQuantity = Arrays.asList(line.split(":"));
+            int index = Integer.parseInt(indexAndQuantity.get(0));
+            int quantity = Integer.parseInt(indexAndQuantity.get(1));
+            temp.add(catalogue.getItem(index));
+            temp.get(index).setQuantity(quantity);
+        }
+        this.currentOrder = temp;
+        this.totalPrice = Double.parseDouble(arrayList.get(2));
+        this.totalTimeTaken = Long.parseLong(arrayList.get(3));
+        this.pickupDate = LocalDate.parse(arrayList.get(4));
 
 
     }
