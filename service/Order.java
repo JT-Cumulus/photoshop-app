@@ -3,6 +3,7 @@ package service;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -21,46 +22,43 @@ public class Order {
         this.pickupDate = pickupDate;
     }
 
-    public Order(ShoppingCart cart){
-        this.currentOrder = cart.getCurrentCart();
-        this.orderID = cart.getOrderID();
-        this.totalPrice = cart.getTotalPrice();
-        this.totalTimeTaken = cart.getTotalTimeTaken();
-        this.pickupDate = cart.getPickupDate();
+    public Order(ArrayList<String> arrayList){
+        this.currentOrder = arrayList.get(0);
+        this.orderID = arrayList.get(0);
+        this.totalPrice = arrayList.get(0);
+        this.totalTimeTaken = arrayList.get(0);
+        this.pickupDate = arrayList.get(0);
     }
 
     // Find an order from its id within the invoices TODO
-    public String[] findOrder(int orderID){
-        String fileName = "database/PhotoShop_Orders.csv";
+    public ArrayList<String> getOrder(int orderID){
+        String fileName = "./invoices/order_" + orderID + ".json";
         File file = new File(fileName);
   
         // this gives you a 2-dimensional array of strings
         Scanner inputStream;
-        int id = 0;
+        ArrayList<String> cob = new ArrayList<>();
         try{
             inputStream = new Scanner(file);
             while(inputStream.hasNext()){
                 String line = inputStream.nextLine();
-                String[] values = line.split(";");
+                String[] values = line.split(",");
                 // this adds the currently parsed line to the 2-dimensional string array
-                id = Integer.parseInt(values[0]);
-                if(id == orderID){
-                    inputStream.close();
-                    return values;
-                }
+                cob.add(values[0]);
             }
             inputStream.close();
             
         }catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        
-        return null;
+        return cob;
     }
 
     public Order retrieveOrder(int orderID){
         String[] values = findOrder(orderID);
-        values[0] = ;
+        int id = Integer.getInteger(values[0]);
+        
+
 
     }
     
