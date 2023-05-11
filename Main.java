@@ -14,6 +14,7 @@ import repository.Employee;
 import repository.UserHandler;
 import service.Catalogue;
 import service.Days;
+import service.Invoice;
 import service.Item;
 import service.ShoppingCart;
 
@@ -128,7 +129,8 @@ public class Main {
                 Customer saveCustomer = customerEntry();
                 cart.saveCart(cart, employee, saveCustomer);
                 exportJson(cart);
-            }
+        
+            } 
         }
     }
 
@@ -148,7 +150,7 @@ public class Main {
             case 1:
             users.displayCustomers();
             System.out.println("Please select the customer id: ");
-            int option = userNavigation();
+            int option = userNavigation() - 1;
             Customer customer = users.getCustomer(option);
             return customer;
             
@@ -183,8 +185,14 @@ public class Main {
 
     public static void checkInvoice(){
         System.out.println("Please enter your order ID: ");
-
         int orderID = userNavigation();
+        String[] userInfo = users.getInfo(orderID);
+        Customer chosenCustomer = Customer.getID(Integer.parseInt(userInfo[1]));
+        Employee chosenEmployee = Employee.getID(Integer.parseInt(userInfo[3]));
+        
+        Invoice invoice = new Invoice(chosenEmployee, chosenCustomer);
+        
+        System.out.print(Invoice.findOrder());
 
     }
 
