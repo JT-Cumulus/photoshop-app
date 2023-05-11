@@ -40,7 +40,7 @@ public class ShoppingCart{
     public List<String> getCart(){
         ArrayList<String> container = new ArrayList<String>();
         container.add(Integer.toString(orderID));
-        container.add(convertString());
+        container.add(this.convertString());
         container.add(Double.toString(totalPrice));
         container.add(Long.toString(totalTimeTaken));
         container.add(pickupDate.format(DateTimeFormatter.ofPattern("yyyy/MM/dd")));
@@ -112,7 +112,6 @@ public class ShoppingCart{
             System.out.println(object + "\t   " + object.getQuantity());
         }
         System.out.println("Total Price: " + this.returnTotalPrice() + " EUR");
-        //System.out.println("Total Time Required: " + ((this.totalTimeTaken / 60) / 24 + " days"));
         System.out.println("Total Time Required: " + ((this.totalTimeTaken / 60) + " working hours"));
     }
 
@@ -153,7 +152,7 @@ public class ShoppingCart{
     public String convertString(){
         String temp = "";
         for(Item items : this.currentCart){
-            temp += items.getId() + ";" + items.getQuantity() + ";" + items.getPrice() + ",\n";
+            temp += items.getId() + ";" + items.getQuantity();
         }
         return temp;
     }
