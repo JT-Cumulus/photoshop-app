@@ -7,6 +7,8 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import com.google.gson.Gson;
+
 import repository.Customer;
 import repository.Employee;
 import service.ShoppingCart;
@@ -59,6 +61,9 @@ public class Invoice {
       // this gives you a 2-dimensional array of strings
       Scanner inputStream;
       ArrayList<String> cob = new ArrayList<>();
+
+      Order order = new Gson().fromJson(file, Order.class);
+
       try{
           inputStream = new Scanner(file);
           while(inputStream.hasNext()){

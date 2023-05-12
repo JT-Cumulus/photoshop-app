@@ -15,6 +15,7 @@ import java.time.format.DateTimeFormatter;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.stream.JsonWriter;
 import com.opencsv.CSVWriter;
 
 import repository.Customer;
@@ -103,6 +104,38 @@ public class ShoppingCart{
         }
     }
 
+    // Export purchase to .json file
+    public void exportJson(ShoppingCart cart){
+        String orderNumber = Integer.toString(cart.getOrderID());
+  
+        try (JsonWriter writer = new JsonWriter(new FileWriter("./invoices/order_" + orderNumber + ".json"))) {
+
+            writer.beginObject();                   
+            writer.name("id").value(cart.getOrderID());    
+            writer.name("items");               
+            writer.beginArray();  
+            for(Item item: cart.getCurrentCart()){
+                writer.value(item.getId());
+            }
+            writer.endArray();
+            writer.name("quantity");
+            writer.beginArray();
+            for(Item item: cart.getCurrentCart()){
+                writer.value(item.getQuantity());
+            }
+            writer.endArray();
+            writer.name("total price").value(cart.getTotalPrice());
+            writer.name("time taken").value(cart.getTotalTimeTaken());
+            writer.name("pickup date").value(cart.getPickupDate().format(DateTimeFormatter.ofPattern("yyyy/MM/dd")));
+
+            writer.endObject();
+            }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
     // Display purchased items in cart and print total price
     public void displayCart(){
         System.out.println(String.format("%-5s %-30s %15s %20s %10s" , "ID", "Item", "Price(EUR)", "Time to Make (min)", "Quantity"));
@@ -152,7 +185,7 @@ public class ShoppingCart{
     public String convertString(){
         String temp = "";
         for(Item items : this.currentCart){
-            temp += items.getId() + ":" + items.getQuantity() + ";";
+            temp += items.getId();
         }
         return temp;
     }

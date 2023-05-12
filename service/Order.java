@@ -81,7 +81,6 @@ public class Order {
         this.totalTimeTaken = Long.parseLong(arrayList.get(3));
         this.pickupDate = LocalDate.parse(arrayList.get(4));
 
-
     }
     
 }

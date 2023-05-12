@@ -130,7 +130,7 @@ public class Main {
                 checkOrder();
                 Customer saveCustomer = customerEntry();
                 cart.saveCart(cart, employee, saveCustomer);
-                exportJson(cart);
+                cart.exportJson(cart);
         
             } 
         }
@@ -199,21 +199,6 @@ public class Main {
         
         System.out.print(Invoice.findOrder());*/
 
-    }
-
-    // Export purchase to .json file
-    public static void exportJson(ShoppingCart cart){
-        Gson gson = new GsonBuilder().create();
-        String orderNumber = Integer.toString(cart.getOrderID());
-  
-        // Java Object to a file
-        try (FileWriter writer = new FileWriter(
-                 "./invoices/order_" + orderNumber + ".json")) {
-            gson.toJson(cart.getCart(), writer);
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
 }
