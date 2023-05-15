@@ -64,7 +64,13 @@ public class Customer {
     }
 
     public void printInvoice(){
-        return String.format();
+        System.out.println("Customer:");
+        System.out.println(this.getFirstName() + " " + this.getLastName());
+        System.out.println(this.getAddress());
+        System.out.println(this.getPostcode());
+        System.out.println(this.getCity());
+        System.out.println(this.getEmail());
+        System.out.println(this.getMobile());
     }
 
     // Load current id for customers
