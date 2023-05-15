@@ -1,6 +1,7 @@
 import java.time.LocalDate;
 import static java.time.temporal.ChronoUnit.DAYS;
 
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
@@ -33,7 +34,7 @@ public class Main {
     // Tracker for user location in navigation
     static int userLocation = 0;
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws FileNotFoundException, IOException {
         // Declare id of employer
         users.displayEmployees();
         System.out.println("Please select your employee ID: ");
@@ -66,8 +67,7 @@ public class Main {
 
                 // Print invoice details / allow user to access order details from invoice no.
                 case 3:
-                Order oldOrder = new Order();
-                checkInvoice(oldOrder);
+                checkInvoice();
                 break;
 
                 // Exit program condition
@@ -185,17 +185,17 @@ public class Main {
         userLocation = -1;
     }
 
-    public static void checkInvoice(Order madeOrder){
+    public static void checkInvoice() throws FileNotFoundException, IOException{
+        Invoice newInvoice = new Invoice();
         System.out.println("Please enter your order ID: ");
         int orderID = userNavigation();
         //String[] userInfo = users.getInfo(orderID);
-        madeOrder.retrieveOrder(madeOrder.getOrder(orderID), catalogue);
-        System.out.println(madeOrder);
+        Order order = newInvoice.findInvoice(orderID, catalogue);
+
+        order.displayCart();
+        userLocation = -1;
        /*  Customer chosenCustomer = Customer.getID(Integer.parseInt(userInfo[1]));
         Employee chosenEmployee = Employee.getID(Integer.parseInt(userInfo[3]));
-
-        
-        Invoice invoice = new Invoice(chosenEmployee, chosenCustomer);
         
         System.out.print(Invoice.findOrder());*/
 
