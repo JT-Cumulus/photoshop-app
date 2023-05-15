@@ -13,7 +13,7 @@ public class Catalogue {
     }
 
     public Item getItem(int index) {
-        return new Item(items.get(index));
+        return new Item(items.get(index - 1));
     }
 
     public void setItem(int index, Item item) {

@@ -22,11 +22,11 @@ public class UserHandler {
     }
 
     public Employee getEmployee(int index){
-        return this.employeeList.get(index);
+        return this.employeeList.get(index - 1);
     }
 
     public Customer getCustomer(int index){
-        return this.customerList.get(index);
+        return this.customerList.get(index - 1);
     }
 
     public void displayEmployees(){
@@ -71,7 +71,7 @@ public class UserHandler {
             inputStream = new Scanner(file);
             while(inputStream.hasNext()){
                 String line = inputStream.nextLine();
-                String[] values = line.split(",");
+                String[] values = line.split(";");
                 // this adds the currently parsed line to the 2-dimensional string array
                 id = Integer.parseInt(values[0]);
                 if(id == orderID){
