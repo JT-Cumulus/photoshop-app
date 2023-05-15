@@ -2,15 +2,11 @@ package service;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.lang.ProcessBuilder.Redirect.Type;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonElement;
 
 public class Order {
     private List<Item> currentOrder;
@@ -31,15 +27,6 @@ public class Order {
         currentOrder = new ArrayList<Item>();
 
     }
-
-    /*
-    public Order(ArrayList<String> arrayList){
-        this.orderID = Integer.parseInt(arrayList.get(0));
-        this.currentOrder = new List<Item>(Arrays.asList(arrayList.get(1).split(";")));
-        this.totalPrice = Double.parseDouble(arrayList.get(2));
-        this.totalTimeTaken = Long.parseLong(arrayList.get(3));
-        this.pickupDate = LocalDate.parse(arrayList.get(4));
-    }*/
 
     // Find an order from its id within the invoices TODO
     public ArrayList<String> getOrder(int orderID){
@@ -68,11 +55,10 @@ public class Order {
         return cob;
     }
 
+    // Displays the cart without changing any values
     public void displayCart(){
         System.out.println(String.format("%-5s %-30s %15s %20s %10s" , "ID", "Item", "Price(EUR)", "Time to Make (min)", "Quantity"));
         for (Item object: this.currentOrder) {
-            this.totalPrice += object.getPrice() * object.getQuantity();
-            this.totalTimeTaken += object.getMinutes() * object.getQuantity();
             System.out.println(object + "\t   " + object.getQuantity());
         }
         System.out.println("Total Price: " + this.getTotalPrice() + " EUR");
