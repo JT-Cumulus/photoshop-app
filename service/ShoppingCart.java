@@ -107,9 +107,8 @@ public class ShoppingCart{
     // Export purchase to .json file
     public void exportJson(ShoppingCart cart){
         String orderNumber = Integer.toString(cart.getOrderID());
-  
         try (JsonWriter writer = new JsonWriter(new FileWriter("./invoices/order_" + orderNumber + ".json"))) {
-
+            writer.setIndent("  ");
             writer.beginObject();                   
             writer.name("id").value(cart.getOrderID());    
             writer.name("items");               
