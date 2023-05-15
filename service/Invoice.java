@@ -1,49 +1,19 @@
 package service;
 
-import user.*;
-
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Scanner;
 
-import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
 
 import repository.Customer;
 import repository.Employee;
-import service.ShoppingCart;
 
 public class Invoice {
-    /*
-     * Proposed format
-     * 
-     * Invoice Order ID: orderID
-     * 
-     * Customer:                        Employee:
-     * firstname lastname               firstname lastname
-     * address                          employee id
-     * postcode
-     * city
-     * email
-     * mobile
-     * 
-     * Order Specifications:
-     * orderID
-     * orderDate
-     * orderHours
-     * pickupDate
-     * 
-     * Photo type               Price           Quantity
-     * name                     price           quantity
-     * 
-     * Total costs              sum(price)
-     */
-
+    // Class for generating invoices for the purchases
     private Employee soldEmployee;
     private Customer soldCustomer;
     private Order soldOrder;
@@ -132,11 +102,8 @@ public class Invoice {
         for(int i = 0; i<itemIndex.size();i++){
             newOrder.addItem(catalogue.getItem(itemIndex.get(i)));
             newOrder.getIteminCart(catalogue.getItem(itemIndex.get(i))).setQuantity(itemQuantity.get(i));;;
-
         }
-
         return newOrder;
   }
-
 }
 }
