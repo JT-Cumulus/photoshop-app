@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-
+// Create class for already saved orders
 public class Order {
     private List<Item> currentOrder;
     private Integer orderID;
@@ -25,34 +25,6 @@ public class Order {
 
     public Order(){
         currentOrder = new ArrayList<Item>();
-
-    }
-
-    // Find an order from its id within the invoices TODO
-    public ArrayList<String> getOrder(int orderID){
-        String fileName = "./database/PhotoShop_Orders.csv";
-        File file = new File(fileName);
-  
-        // this gives you a 2-dimensional array of strings
-        Scanner inputStream;
-        ArrayList<String> cob = new ArrayList<>();
-        try{
-            inputStream = new Scanner(file);
-
-            while(inputStream.hasNext()){
-                String line = inputStream.nextLine();
-                String[] values = line.split(";");
-                // this adds the currently parsed line to the 2-dimensional string array
-                if(Integer.parseInt(values[0]) == orderID){
-                    System.out.println(values);
-                }
-            }
-            inputStream.close();
-            
-        }catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        return cob;
     }
 
     // Displays the cart without changing any values
