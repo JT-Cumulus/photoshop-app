@@ -4,10 +4,15 @@ import user.*;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 import com.google.gson.Gson;
+import com.google.gson.stream.JsonReader;
 
 import repository.Customer;
 import repository.Employee;
@@ -48,35 +53,69 @@ public class Invoice {
         this.soldCustomer = customer;
         this.soldOrder = order;
      }
+
+     public Invoice(){
+
+     }
      
      public void displayInvoice(int orderID){
-
+        this.soldCustomer.displayCustomers();
      }
 
      // Find an order from its id within the invoices TODO
-    public ArrayList<String> findInvoice(int orderID){
+    public Order findInvoice(int orderID, Catalogue catalogue) throws FileNotFoundException, IOException{
       String fileName = "./invoices/order_" + orderID + ".json";
-      File file = new File(fileName);
+      Order newOrder = new Order();
 
-      // this gives you a 2-dimensional array of strings
-      Scanner inputStream;
-      ArrayList<String> cob = new ArrayList<>();
+      ArrayList<Integer> itemIndex = new ArrayList<>();
+      ArrayList<Integer> itemQuantity = new ArrayList<>();
 
-      Order order = new Gson().fromJson(file, Order.class);
+      try (JsonReader reader = new JsonReader(new FileReader(fileName))) {
 
-      try{
-          inputStream = new Scanner(file);
-          while(inputStream.hasNext()){
-              String line = inputStream.nextLine();
-              String[] values = line.split(",");
-              // this adds the currently parsed line to the 2-dimensional string array
-              cob.add(values[0]);
-          }
-          inputStream.close();
-          
-      }catch (FileNotFoundException e) {
-          e.printStackTrace();
-      }
-      return cob;
+        reader.beginObject();
+        while (reader.hasNext()) {
+
+            String name = reader.nextName();
+
+            if (name.equals("id")) {
+                newOrder.setOrderID(reader.nextInt());
+            } else if (name.equals("items")) {
+                // read array
+                reader.beginArray();
+                while (reader.hasNext()) {
+                    int currentInt = reader.nextInt();
+                    itemIndex.add(currentInt);
+                }
+                reader.endArray();
+            } else if (name.equals("quantity")) {
+                // read array
+                reader.beginArray();
+                while (reader.hasNext()) {
+                    int currentInt = reader.nextInt();
+                    itemQuantity.add(currentInt);
+                }
+                reader.endArray();
+
+            } else if (name.equals("total price")) {
+                newOrder.setTotalPrice(reader.nextDouble());
+            } else if (name.equals("time taken")) {
+                newOrder.setTotalTimeTaken(reader.nextLong());
+            } else if (name.equals("pickup date")) {
+                newOrder.setPickupDate(LocalDate.parse(reader.nextString(), DateTimeFormatter.ofPattern("yyyy/MM/dd")));
+            } else {
+                reader.skipValue(); //avoid some unhandle events
+            }
+        }
+        reader.endObject();
+
+        for(int i = 0; i<itemIndex.size();i++){
+            newOrder.addItem(catalogue.getItem(itemIndex.get(i)));
+            newOrder.getIteminCart(catalogue.getItem(itemIndex.get(i))).setQuantity(itemQuantity.get(i));;;
+
+        }
+
+        return newOrder;
   }
+
+}
 }
