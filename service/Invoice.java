@@ -58,8 +58,29 @@ public class Invoice {
 
      }
      
-     public void displayInvoice(int orderID){
-        this.soldCustomer.displayCustomers();
+     public void displayInvoice(String orderDate){
+        // Print customer information
+        System.out.println(" ");
+        System.out.println("Invoice of Order No. " + this.soldOrder.getOrderID());
+        System.out.println(String.format("%-20s %10s %-20s", "Customer: ", "", "Employee: "));
+        System.out.println(String.format(
+            "%-20s %10s %-20s",
+            this.soldCustomer.getFirstName() + " " + this.soldCustomer.getLastName(), "",
+            this.soldEmployee.getFirstName() + " " + this.soldEmployee.getLastName()));
+        System.out.println(String.format("%-20s %10s %-20s", this.soldCustomer.getAddress(), "", this.soldEmployee.getEmployeeId()));
+        System.out.println(this.soldCustomer.getPostcode());
+        System.out.println(this.soldCustomer.getCity());
+        System.out.println(this.soldCustomer.getEmail());
+        System.out.println(this.soldCustomer.getMobile());
+
+        System.out.println("");
+
+        System.out.println("Order Specifications: ");
+        System.out.println(String.format("%-30s %10s", "Order Number ", + this.soldOrder.getOrderID()));
+        System.out.println(String.format("%-30s %10s","Order Date ", orderDate));
+        System.out.println(String.format("%-30s %10s", "Production Time ", (this.soldOrder.getTotalTimeTaken() / 60)));
+        System.out.println(String.format("%-30s %10s", "You can pickup order on ", this.soldOrder.getPickupDate()));
+        System.out.println("");
      }
 
      // Find an order from its id within the invoices TODO
