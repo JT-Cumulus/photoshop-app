@@ -5,7 +5,6 @@ import java.io.FileNotFoundException;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.List;
@@ -68,6 +67,7 @@ public class Days {
         this.workingMinutes = workingMinutes;
     }
     
+    // Create a day object, used for loading in the csv
     private static Days createDay(String[] metadata) {
         int dayNumber = Integer.parseInt(metadata[0]);
         String name = metadata[1];
@@ -77,6 +77,7 @@ public class Days {
         return new Days(dayNumber, name, openFrom, openTill);
     }
 
+    // Convert a localdate object to string format
     public static String dateToString(LocalDate date){
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
         String formattedString = date.format(formatter);
@@ -87,6 +88,7 @@ public class Days {
         return LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
     }
 
+    // Function for loading the opening hours csv
     public static List<Days> loadDays(){
         List<Days> openingsTimes = new LinkedList<Days>();
         String fileName= "database/PhotoShop_OpeningHours.csv";
@@ -115,7 +117,8 @@ public class Days {
         return openingsTimes;
     }
 
-    public static void displayOpeningTimes(List<Days> days){
+    // Prints out the opening time stored in the days
+    public void displayOpeningTimes(List<Days> days){
         System.out.println(String.format("%-30s %15s %15s" , "Day", "Open From", "Open Till"));
         for(Days current: days){
             System.out.println(current.toString());
