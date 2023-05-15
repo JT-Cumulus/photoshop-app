@@ -38,7 +38,7 @@ public class Main {
         // Declare id of employer
         users.displayEmployees();
         System.out.println("Please select your employee ID: ");
-        Employee currentEmployee = users.getEmployee(userNavigation() - 1);
+        Employee currentEmployee = users.getEmployee(userNavigation());
 
         // Main store menu
         shopMenu();
@@ -67,7 +67,7 @@ public class Main {
 
                 // Print invoice details / allow user to access order details from invoice no.
                 case 3:
-                checkInvoice();
+                checkInvoice(users);
                 break;
 
                 // Exit program condition
@@ -117,7 +117,7 @@ public class Main {
         String status = "c";
         while (status.equals("c")) {
             System.out.print("Please choose a number between 1 - " + catalogue.getLength() + ": ");
-            int choice = scan.nextInt() - 1;
+            int choice = scan.nextInt();
             Item item = catalogue.getItem(choice);
             cart.addItem(item);
             System.out.print("You have added: " + item.getName());
@@ -152,7 +152,7 @@ public class Main {
             case 1:
             users.displayCustomers();
             System.out.println("Please select the customer id: ");
-            int option = userNavigation() - 1;
+            int option = userNavigation();
             Customer customer = users.getCustomer(option);
             return customer;
             
@@ -185,19 +185,21 @@ public class Main {
         userLocation = -1;
     }
 
-    public static void checkInvoice() throws FileNotFoundException, IOException{
+    public static void checkInvoice(UserHandler user) throws FileNotFoundException, IOException{
         Invoice newInvoice = new Invoice();
         System.out.println("Please enter your order ID: ");
         int orderID = userNavigation();
-        //String[] userInfo = users.getInfo(orderID);
+        String[] userInfo = users.getInfo(orderID);
         Order order = newInvoice.findInvoice(orderID, catalogue);
 
-        order.displayCart();
         userLocation = -1;
-       /*  Customer chosenCustomer = Customer.getID(Integer.parseInt(userInfo[1]));
-        Employee chosenEmployee = Employee.getID(Integer.parseInt(userInfo[3]));
+        Customer chosenCustomer = user.getCustomer(Integer.parseInt(userInfo[1]));
+        Employee chosenEmployee = user.getEmployee(Integer.parseInt(userInfo[4]));
+        String orderDate = userInfo[2];
         
-        System.out.print(Invoice.findOrder());*/
+        newInvoice = new Invoice(chosenEmployee, chosenCustomer, order);
+        newInvoice.displayInvoice(orderDate);
+        order.displayCart();
 
     }
 
