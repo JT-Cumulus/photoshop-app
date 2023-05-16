@@ -22,7 +22,13 @@ public class UserHandler {
     }
 
     public Employee getEmployee(int index){
-        return this.employeeList.get(index - 1);
+        if (index > 0 && index < this.employeeList.size()){
+            Employee newEmployee = this.employeeList.get(index - 1);
+            return newEmployee;
+        } else {
+            System.out.println("Invalid input");
+            return null;
+        }
     }
 
     public Customer getCustomer(int index){
