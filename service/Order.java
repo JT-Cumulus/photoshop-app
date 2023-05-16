@@ -1,8 +1,11 @@
 package service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import static java.time.temporal.ChronoUnit.MINUTES;
+
 
 // Create class for already saved orders
 public class Order {
@@ -32,6 +35,11 @@ public class Order {
         }
         System.out.println("Total Price: " + this.getTotalPrice() + " EUR");
         System.out.println("Total Time Required: " + ((this.totalTimeTaken / 60) + " working hours"));
+    }
+
+    public void displayPickupDate(Days days, List<Days> openingsTimes){
+        LocalDateTime pickup = this.pickupDate.atTime(9, 0);
+        System.out.println("You can pick up on: " + pickup.plusMinutes(days.calculatePickupTime(this.totalTimeTaken, openingsTimes)));
     }
 
     // Return the item within the cart such that the quantity can be updated in the shopping cart
