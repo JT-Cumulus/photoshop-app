@@ -100,7 +100,7 @@ public class Days {
         try{
             inputStream = new Scanner(file);
             // Skip the header 
-            String header = inputStream.nextLine();
+            inputStream.nextLine();
 
             while(inputStream.hasNext()){
                 String line = inputStream.nextLine();
