@@ -11,8 +11,8 @@ import java.util.List;
 import java.util.Scanner;
 import static java.time.temporal.ChronoUnit.MINUTES;
 
+// Class responsible for displaying time remaining until order is complete
 public class Days {
-    // Class responsible for displaying time remaining until order is complete
     private int dayNumber;
     private String day;
     private LocalTime openFrom;
@@ -99,6 +99,7 @@ public class Days {
 
         try{
             inputStream = new Scanner(file);
+            // Skip the header 
             String header = inputStream.nextLine();
 
             while(inputStream.hasNext()){
