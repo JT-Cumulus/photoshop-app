@@ -24,13 +24,14 @@ public class Main {
     static UserHandler users = new UserHandler();
     static Scanner scan = new Scanner(System.in);
 
-    // Load in Opening Times of the shop
-    static List<Days> openingTimes = Days.loadDays();
-
     // Tracker for user location in navigation
     static int userLocation = 0;
 
     public static void main(String[] args) throws FileNotFoundException, IOException {
+        // Load in Opening Times of the shop
+        List<Days> openingTimes = Days.loadDays();
+        Days days = new Days();
+
         // Declare id of employer
         users.displayEmployees();
         System.out.println("Please select your employee ID: ");
@@ -53,17 +54,17 @@ public class Main {
                 catalogue.printCatalogue();
 
                 // Add item to shopping cart here
-                purchaseMenu(currentEmployee);
+                purchaseMenu(currentEmployee, days, openingTimes);
                 break;
 
                 // Print order details - provide date for order pickup
                 case 2:
-                checkOrder();
+                checkOrder(days, openingTimes);
                 break;
 
                 // Print invoice details / allow user to access order details from invoice no.
                 case 3:
-                checkInvoice(users);
+                checkInvoice(users, catalogue);
                 break;
 
                 // Exit program condition
@@ -107,7 +108,7 @@ public class Main {
     }
 
     //Function for making purchase
-    public static void purchaseMenu(Employee employee){
+    public static void purchaseMenu(Employee employee, Days days, List<Days> openingTimes){
 
         String status = "c";
         while (status.equals("c")) {
@@ -122,8 +123,9 @@ public class Main {
 
             // Check if user wants to make purchase
             if (status.equals("b")){
-                checkOrder();
+                displayOrder(days, openingTimes);
                 Customer saveCustomer = customerEntry();
+                // Possibly merge these into one function
                 cart.saveCart(cart, employee, saveCustomer);
                 cart.exportJson(cart);
         
@@ -165,12 +167,12 @@ public class Main {
     }
 
     // Function to check order for customer
-    public static void checkOrder(){
+    public static void displayOrder(Days days, List<Days> openingTimes){
         String menuDivider = "---------------------------";
 
         System.out.println(menuDivider);
         cart.displayCart();
-        int workingDaysNeeded = Days.calculatePickup(cart.getTotalTimeTaken(), openingTimes);
+        int workingDaysNeeded = days.calculatePickup(cart.getTotalTimeTaken(), openingTimes);
         LocalDate dateNow = LocalDate.now();
         LocalDate finalDate = dateNow.plus(workingDaysNeeded, DAYS);
         cart.setPickupDate(finalDate);
@@ -180,8 +182,18 @@ public class Main {
         userLocation = -1;
     }
 
+    public static void checkOrder(Days days, List<Days> openingTimes) throws FileNotFoundException, IOException{
+        Invoice newInvoice = new Invoice();
+        System.out.println("Please enter your order ID: ");
+        int orderID = userNavigation();
+        Order order = newInvoice.findInvoice(orderID, catalogue);
+
+        order.displayCart();
+        order.displayPickupDate(days, openingTimes);
+    }
+
     // Check invoice navigation
-    public static void checkInvoice(UserHandler user) throws FileNotFoundException, IOException{
+    public static void checkInvoice(UserHandler user, Catalogue catalogue) throws FileNotFoundException, IOException{
         Invoice newInvoice = new Invoice();
         System.out.println("Please enter your order ID: ");
         int orderID = userNavigation();
