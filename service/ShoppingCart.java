@@ -2,7 +2,6 @@ package service;
 
 import java.util.List;
 import java.util.Scanner;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -13,8 +12,6 @@ import java.io.Writer;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.gson.stream.JsonWriter;
 import com.opencsv.CSVWriter;
 

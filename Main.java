@@ -2,13 +2,9 @@ import java.time.LocalDate;
 import static java.time.temporal.ChronoUnit.DAYS;
 
 import java.io.FileNotFoundException;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
 import java.util.Scanner;
-
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 import repository.Customer;
 import repository.Employee;
@@ -75,7 +71,6 @@ public class Main {
                 userLocation = -1;
 
             }
-
         }
         
         // Close scanner at end
@@ -185,6 +180,7 @@ public class Main {
         userLocation = -1;
     }
 
+    // Check invoice navigation
     public static void checkInvoice(UserHandler user) throws FileNotFoundException, IOException{
         Invoice newInvoice = new Invoice();
         System.out.println("Please enter your order ID: ");
