@@ -63,16 +63,6 @@ public class Customer {
         return new Customer(Customer.loadIdIncrement(), firstName, lastName, address, postcode, city, email, mobile);
     }
 
-    public void printInvoice(){
-        System.out.println("Customer:");
-        System.out.println(this.getFirstName() + " " + this.getLastName());
-        System.out.println(this.getAddress());
-        System.out.println(this.getPostcode());
-        System.out.println(this.getCity());
-        System.out.println(this.getEmail());
-        System.out.println(this.getMobile());
-    }
-
     // Load current id for customers
     public static int loadIdIncrement(){
         String fileName = "user/PhotoShop_Customers.csv";
