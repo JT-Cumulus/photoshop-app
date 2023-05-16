@@ -1,11 +1,8 @@
 package service;
 
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 // Create class for already saved orders
 public class Order {
@@ -66,7 +63,7 @@ public class Order {
         }
     }
 
-
+    // Return current order as list of items
     public List<Item> getCurrentOrder() {
         return this.currentOrder;
     }
