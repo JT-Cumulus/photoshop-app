@@ -119,7 +119,6 @@ public class ShoppingCart{
         }
     }
 
-
     // Display purchased items in cart and print total price
     public void displayCart(){
         System.out.println(String.format("%-5s %-30s %15s %20s %10s" , "ID", "Item", "Price(EUR)", "Time to Make (min)", "Quantity"));
