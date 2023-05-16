@@ -37,18 +37,6 @@ public class ShoppingCart{
         this.totalTimeTaken = 0;
     }
 
-    // Return the current cart
-    public List<String> getCart(){
-        ArrayList<String> container = new ArrayList<String>();
-        container.add(Integer.toString(orderID));
-        container.add(this.convertString());
-        container.add(Double.toString(totalPrice));
-        container.add(Long.toString(totalTimeTaken));
-        container.add(pickupDate.format(DateTimeFormatter.ofPattern("yyyy/MM/dd")));
-
-        return container;
-    }
-
     // Load items already saved as orders
     public int loadItems(){
         String fileName = "database/PhotoShop_Orders.csv";
@@ -178,15 +166,6 @@ public class ShoppingCart{
     public String returnTotalPrice(){
         String price = String.format(java.util.Locale.US,"%.2f", this.totalPrice);
         return price;
-    }
-
-    // Function for iterating over items in shopping cart for invoice purposes TODO
-    public String convertString(){
-        String temp = "";
-        for(Item items : this.currentCart){
-            temp += items.getId();
-        }
-        return temp;
     }
 
     public List<Item> getCurrentCart(){
