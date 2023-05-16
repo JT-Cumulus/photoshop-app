@@ -2,9 +2,9 @@ To Do List
 High Priority
 - [x] User inputs their information to order
 - [x] Export shopping cart into json
-- [ ] Export whole order as invoice
+- [x] Export whole order as invoice
 - [x] Order time countdown / end date
-- [ ] User can check invoice / status of order
+- [x] User can check invoice / status of order
 - [x] Databases for users
 
 Moderate Priority
