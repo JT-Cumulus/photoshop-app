@@ -190,6 +190,7 @@ public class Main {
 
         order.displayCart();
         order.displayPickupDate(days, openingTimes);
+        userLocation = -1;
     }
 
     // Check invoice navigation
