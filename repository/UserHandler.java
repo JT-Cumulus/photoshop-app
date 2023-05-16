@@ -37,8 +37,7 @@ public class UserHandler {
     }
 
     public void displayCustomers(){
-        // expand this TODO
-        System.out.println(String.format("%-5s %30s %30s" , "ID", "First name", "Last name"));
+        System.out.println(String.format("%-5s %30s %30s %30s %10s %10s %20s %10s" , "ID", "First name", "Last name", "Address", "Aostcode", "City", "Email", "Mobile"));
         for (Customer person: this.customerList) {
             System.out.println(person.toString());
         }
@@ -75,6 +74,7 @@ public class UserHandler {
                 // this adds the currently parsed line to the 2-dimensional string array
                 id = Integer.parseInt(values[0]);
                 if(id == orderID){
+                    inputStream.close();
                     return values;
                 }
 
