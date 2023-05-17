@@ -24,12 +24,10 @@ public class Invoice {
         this.soldOrder = order;
      }
 
-     public Invoice(){
-
-     }
+     public Invoice(){}
      
+     // Print customer information
      public void displayInvoice(String orderDate){
-        // Print customer information
         System.out.println(" ");
         System.out.println("Invoice of Order No. " + this.soldOrder.getOrderID());
         System.out.println(String.format("%-20s %10s %-20s", "Customer: ", "", "Employee: "));
@@ -48,12 +46,12 @@ public class Invoice {
         System.out.println("Order Specifications: ");
         System.out.println(String.format("%-30s %10s", "Order Number ", + this.soldOrder.getOrderID()));
         System.out.println(String.format("%-30s %10s","Order Date ", orderDate));
-        System.out.println(String.format("%-30s %10s", "Production Time ", (this.soldOrder.getTotalTimeTaken() / 60)));
-        System.out.println(String.format("%-30s %10s", "You can pickup order on ", this.soldOrder.getPickupDate()));
+        System.out.println(String.format("%-30s %10s", "Production Time ", (this.soldOrder.getTotalTimeTaken() / 60) + " hrs"));
+        System.out.println(String.format("%-30s %10s", "You can pickup order on ", Days.dateToString(this.soldOrder.getPickupDate())));
         System.out.println("");
      }
 
-     // Find an order from its id within the invoices TODO
+     // Find an order from its id within the invoices
     public Order findInvoice(int orderID, Catalogue catalogue) throws FileNotFoundException, IOException{
       String fileName = "./invoices/order_" + orderID + ".json";
       Order newOrder = new Order();
@@ -71,7 +69,6 @@ public class Invoice {
             if (name.equals("id")) {
                 newOrder.setOrderID(reader.nextInt());
             } else if (name.equals("items")) {
-                // read array
                 reader.beginArray();
                 while (reader.hasNext()) {
                     int currentInt = reader.nextInt();
@@ -79,7 +76,6 @@ public class Invoice {
                 }
                 reader.endArray();
             } else if (name.equals("quantity")) {
-                // read array
                 reader.beginArray();
                 while (reader.hasNext()) {
                     int currentInt = reader.nextInt();
@@ -94,7 +90,7 @@ public class Invoice {
             } else if (name.equals("pickup date")) {
                 newOrder.setPickupDate(LocalDate.parse(reader.nextString(), DateTimeFormatter.ofPattern("yyyy/MM/dd")));
             } else {
-                reader.skipValue(); //avoid some unhandle events
+                reader.skipValue(); //avoid some unhandled events
             }
         }
         reader.endObject();
