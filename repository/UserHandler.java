@@ -22,7 +22,7 @@ public class UserHandler {
     }
 
     public Employee getEmployee(int index){
-        if (index > 0 && index < this.employeeList.size()){
+        if (index > 0 && index <= this.employeeList.size()){
             Employee newEmployee = this.employeeList.get(index - 1);
             return newEmployee;
         } else {
