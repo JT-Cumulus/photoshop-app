@@ -21,6 +21,7 @@ public class UserHandler {
         this.employeeList = Employee.loadEmployees();
     }
 
+    // Return a employee from the list
     public Employee getEmployee(int index){
         if (index > 0 && index <= this.employeeList.size()){
             Employee newEmployee = this.employeeList.get(index - 1);
@@ -31,10 +32,12 @@ public class UserHandler {
         }
     }
 
+    // Return a customer from the list
     public Customer getCustomer(int index){
         return this.customerList.get(index - 1);
     }
 
+    // Print a list of the current employees
     public void displayEmployees(){
         System.out.println(String.format("%-5s %30s %30s" , "ID", "First name", "Last name"));
         for (Employee person: this.employeeList) {
@@ -42,6 +45,7 @@ public class UserHandler {
         }
     }
 
+    // Print a list of the current customers in the database
     public void displayCustomers(){
         System.out.println(String.format("%-5s %30s %30s %30s %10s %10s %20s %10s" , "ID", "First name", "Last name", "Address", "Aostcode", "City", "Email", "Mobile"));
         for (Customer person: this.customerList) {
@@ -49,6 +53,7 @@ public class UserHandler {
         }
     }
 
+    // Make a new customer and save it to the csv
     public Customer makeNewCustomer(){
         Scanner scan = new Scanner(System.in);
         String[] customerInfo = new String[8];
@@ -64,7 +69,7 @@ public class UserHandler {
         return newCustomer;
     }
 
-    // Find an order from its id within the invoices TODO
+    // Find an order from its id within the invoices
     public String[] getInfo(int orderID){
         String fileName = "./database/PhotoShop_orders.csv";
         File file = new File(fileName);
@@ -93,6 +98,7 @@ public class UserHandler {
         return null;
     }
 
+    // Save a customer to a new line in the csv
     public static void saveCustomer(Customer newCustomer){
         try {
             // create FileWriter object with file as parameter
