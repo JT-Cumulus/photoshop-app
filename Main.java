@@ -49,10 +49,7 @@ public class Main {
             int option = userNavigation();
 
             switch(option){
-                // Print catalogue here
                 case 1:
-                catalogue.printCatalogue();
-
                 // Add item to shopping cart here
                 purchaseMenu(currentEmployee, days, openingTimes);
                 break;
@@ -86,6 +83,7 @@ public class Main {
                 userChoice = scan.nextInt();
             } catch(Exception e) { 
                 System.out.println("Invalid input, try again");
+                break;
             }
         }
         return userChoice;
@@ -104,7 +102,6 @@ public class Main {
         System.out.println("Press 3 - See invoice details");
         System.out.println("Press 0 - Exit program");
         System.out.println(menuDivider);
-        
     }
 
     //Function for making purchase
@@ -112,14 +109,28 @@ public class Main {
 
         String status = "c";
         while (status.equals("c")) {
+            catalogue.printCatalogue();
             System.out.print("Please choose a number between 1 - " + catalogue.getLength() + ": ");
             int choice = scan.nextInt();
             Item item = catalogue.getItem(choice);
             cart.addItem(item);
             System.out.print("You have added: " + item.getName());
             System.out.print("\nTo add another item type 'c' ");
+            System.out.print("\nTo remove an item type 'v' ");
             System.out.print("\nTo finalise your purchase type 'b': ");
             status = scan.next();
+
+            // Check if user wants to remove item
+            if (status.equals("v")){
+                cart.displayCart();
+                System.out.print("Please choose the item to remove: ");
+                int choiceRemove = scan.nextInt();
+                Item itemRemoved = cart.getIteminCart(catalogue.getItem(choiceRemove));
+                cart.removeItem(itemRemoved);
+                System.out.println("Your cart now:");
+                cart.displayCart();
+                status = "c";
+            } 
 
             // Check if user wants to make purchase
             if (status.equals("b")){
@@ -128,7 +139,6 @@ public class Main {
                 // Possibly merge these into one function
                 cart.saveCart(cart, employee, saveCustomer);
                 cart.exportJson(cart);
-        
             } 
         }
     }
@@ -182,6 +192,7 @@ public class Main {
         userLocation = -1;
     }
 
+    // Function to check an order from its ID
     public static void checkOrder(Days days, List<Days> openingTimes) throws FileNotFoundException, IOException{
         Invoice newInvoice = new Invoice();
         System.out.println("Please enter your order ID: ");
@@ -193,7 +204,7 @@ public class Main {
         userLocation = -1;
     }
 
-    // Check invoice navigation
+    // Check invoice navigation - prints out the invoice of the order id
     public static void checkInvoice(UserHandler user, Catalogue catalogue) throws FileNotFoundException, IOException{
         Invoice newInvoice = new Invoice();
         System.out.println("Please enter your order ID: ");
