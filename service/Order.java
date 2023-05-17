@@ -24,6 +24,46 @@ public class Order {
     public Order(){
         currentOrder = new ArrayList<Item>();
     }
+    
+    public List<Item> getCurrentOrder() {
+        return this.currentOrder;
+    }
+
+    public void setCurrentOrder(List<Item> currentOrder) {
+        this.currentOrder = currentOrder;
+    }
+
+    public Integer getOrderID() {
+        return this.orderID;
+    }
+
+    public void setOrderID(Integer orderID) {
+        this.orderID = orderID;
+    }
+
+    public double getTotalPrice() {
+        return this.totalPrice;
+    }
+
+    public void setTotalPrice(double totalPrice) {
+        this.totalPrice = totalPrice;
+    }
+
+    public long getTotalTimeTaken() {
+        return this.totalTimeTaken;
+    }
+
+    public void setTotalTimeTaken(long totalTimeTaken) {
+        this.totalTimeTaken = totalTimeTaken;
+    }
+
+    public LocalDate getPickupDate() {
+        return this.pickupDate;
+    }
+
+    public void setPickupDate(LocalDate pickupDate) {
+        this.pickupDate = pickupDate;
+    }
 
     // Displays the cart without changing any values
     public void displayCart(){
@@ -69,46 +109,7 @@ public class Order {
         }
     }
 
-    // Return current order as list of items
-    public List<Item> getCurrentOrder() {
-        return this.currentOrder;
-    }
 
-    public void setCurrentOrder(List<Item> currentOrder) {
-        this.currentOrder = currentOrder;
-    }
-
-    public Integer getOrderID() {
-        return this.orderID;
-    }
-
-    public void setOrderID(Integer orderID) {
-        this.orderID = orderID;
-    }
-
-    public double getTotalPrice() {
-        return this.totalPrice;
-    }
-
-    public void setTotalPrice(double totalPrice) {
-        this.totalPrice = totalPrice;
-    }
-
-    public long getTotalTimeTaken() {
-        return this.totalTimeTaken;
-    }
-
-    public void setTotalTimeTaken(long totalTimeTaken) {
-        this.totalTimeTaken = totalTimeTaken;
-    }
-
-    public LocalDate getPickupDate() {
-        return this.pickupDate;
-    }
-
-    public void setPickupDate(LocalDate pickupDate) {
-        this.pickupDate = pickupDate;
-    }
 
     
 }

@@ -63,58 +63,6 @@ public class Customer {
         return new Customer(Customer.loadIdIncrement(), firstName, lastName, address, postcode, city, email, mobile);
     }
 
-    // Load current id for customers
-    public static int loadIdIncrement(){
-        String fileName = "user/PhotoShop_Customers.csv";
-        File file = new File(fileName);
-        int id = 2;
-
-        // this gives you a 2-dimensional array of strings
-        Scanner inputStream;
-
-        try{
-            inputStream = new Scanner(file);
-            while(inputStream.hasNext()){
-                String line = inputStream.nextLine();
-                String[] values = line.split(";");
-                // this adds the currently parsed line to the 2-dimensional string array
-                id = Integer.parseInt(values[0]);
-            }
-            inputStream.close();
-            
-        }catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        return id + 1;
-    }
-
-    public static ArrayList<Customer> loadCustomers(){
-        String fileName = "user/PhotoShop_Customers.csv";
-        File file = new File(fileName);
-        ArrayList<Customer> customerContainer = new ArrayList<>();
-        Scanner inputStream;
-
-        try{
-            inputStream = new Scanner(file);
-            while(inputStream.hasNext()){
-                String line = inputStream.nextLine();
-                String[] values = line.split(";");
-                Customer customer = createCustomer(values);
-                customerContainer.add(customer);
-            }
-            inputStream.close();
-        }catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        return customerContainer;
-    }
-
-    @Override
-    public String toString(){
-        return String.format("%-5s %30s %30s %30s %10s %10s %20s %10s", this.ID, this.firstName, this.lastName, this.address, this.postcode, this.city, this.email, this.mobile);
-    }
-
     public int getID() {
         return this.ID;
     }
@@ -177,6 +125,59 @@ public class Customer {
 
     public void setMobile(String mobile) {
         this.mobile = mobile;
+    }
+
+    
+    // Load current id for customers
+    public static int loadIdIncrement(){
+        String fileName = "user/PhotoShop_Customers.csv";
+        File file = new File(fileName);
+        int id = 2;
+
+        // this gives you a 2-dimensional array of strings
+        Scanner inputStream;
+
+        try{
+            inputStream = new Scanner(file);
+            while(inputStream.hasNext()){
+                String line = inputStream.nextLine();
+                String[] values = line.split(";");
+                // this adds the currently parsed line to the 2-dimensional string array
+                id = Integer.parseInt(values[0]);
+            }
+            inputStream.close();
+            
+        }catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        return id + 1;
+    }
+
+    public static ArrayList<Customer> loadCustomers(){
+        String fileName = "user/PhotoShop_Customers.csv";
+        File file = new File(fileName);
+        ArrayList<Customer> customerContainer = new ArrayList<>();
+        Scanner inputStream;
+
+        try{
+            inputStream = new Scanner(file);
+            while(inputStream.hasNext()){
+                String line = inputStream.nextLine();
+                String[] values = line.split(";");
+                Customer customer = createCustomer(values);
+                customerContainer.add(customer);
+            }
+            inputStream.close();
+        }catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        return customerContainer;
+    }
+
+    @Override
+    public String toString(){
+        return String.format("%-5s %30s %30s %30s %10s %10s %20s %10s", this.ID, this.firstName, this.lastName, this.address, this.postcode, this.city, this.email, this.mobile);
     }
 
 
