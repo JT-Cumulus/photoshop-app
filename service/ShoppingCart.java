@@ -133,6 +133,7 @@ public class ShoppingCart extends Catalogue{
         System.out.println("Total Time Required: " + ((this.totalTimeTaken / 60) + " working hours"));
     }
 
+    // Save the cart to csv
     public void saveCart(ShoppingCart cart, Employee employee, Customer customer){
         try {
             // create FileWriter object with file as parameter
@@ -205,6 +206,5 @@ public class ShoppingCart extends Catalogue{
     public void setPickupDate(LocalDate pickupDate){
         this.pickupDate = pickupDate;
     }
-
 
 }

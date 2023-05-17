@@ -86,6 +86,7 @@ public class Days {
         return formattedString;
     }
 
+    // Return the current day in string format
     public static String getDateToday(){
         return LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
     }
@@ -135,7 +136,7 @@ public class Days {
         return c.get(Calendar.DAY_OF_WEEK);
     }
 
-    // Function to iterate over day
+    // Function to iterate over days and calculate days taken till pickup
     public int calculatePickup(Long totalWorkDuration, List<Days> openingTimes){
         LocalTime timeNow = LocalTime.now();
         long workDuration = totalWorkDuration;
@@ -197,6 +198,7 @@ public class Days {
         return daysTaken;
     }
 
+    // Calculate time of pickup
     public long calculatePickupTime(Long totalWorkDuration, List<Days> openingTimes){
         LocalTime timeNow = LocalTime.now();
         long workDuration = totalWorkDuration;
