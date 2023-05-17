@@ -19,7 +19,7 @@ import repository.Customer;
 import repository.Employee;
 
 // Store current items placed in shopping cart
-public class ShoppingCart{
+public class ShoppingCart extends Catalogue{
     
     private List<Item> currentCart;
     private Integer orderID;
@@ -121,6 +121,8 @@ public class ShoppingCart{
 
     // Display purchased items in cart and print total price
     public void displayCart(){
+        this.totalPrice = 0;
+        this.totalTimeTaken = 0;
         System.out.println(String.format("%-5s %-30s %15s %20s %10s" , "ID", "Item", "Price(EUR)", "Time to Make (min)", "Quantity"));
         for (Item object: this.currentCart) {
             this.totalPrice += object.getPrice() * object.getQuantity();
