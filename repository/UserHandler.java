@@ -34,7 +34,13 @@ public class UserHandler {
 
     // Return a customer from the list
     public Customer getCustomer(int index){
-        return this.customerList.get(index - 1);
+        if (index > 0 && index <= this.customerList.size()){
+            Customer newCustomer = this.customerList.get(index - 1);
+            return newCustomer;
+        } else {
+            System.out.println("Invalid input");
+            return null;
+        }
     }
 
     // Print a list of the current employees
