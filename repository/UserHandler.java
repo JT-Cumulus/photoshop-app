@@ -53,7 +53,7 @@ public class UserHandler {
 
     // Print a list of the current customers in the database
     public void displayCustomers(){
-        System.out.println(String.format("%-5s %30s %30s %30s %10s %10s %20s %15s" , "ID", "First name", "Last name", "Address", "Aostcode", "City", "Email", "Mobile"));
+        System.out.println(String.format("%-5s %30s %30s %30s %10s %10s %20s %15s" , "ID", "First name", "Last name", "Address", "Postcode", "City", "Email", "Mobile"));
         for (Customer person: this.customerList) {
             System.out.println(person.toString());
         }
