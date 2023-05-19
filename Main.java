@@ -199,8 +199,8 @@ public class Main {
         int orderID = userNavigation();
         Order order = newInvoice.findInvoice(orderID, catalogue);
 
-        order.displayCart();
-        order.displayPickupDate(days, openingTimes);
+        order.displayOrder();
+        order.displayPickupTime(days, openingTimes);
         userLocation = -1;
     }
 

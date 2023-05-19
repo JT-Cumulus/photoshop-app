@@ -66,7 +66,7 @@ public class Order {
     }
 
     // Displays the cart without changing any values
-    public void displayCart(){
+    public void displayOrder(){
         System.out.println(String.format("%-5s %-30s %15s %20s %10s" , "ID", "Item", "Price(EUR)", "Time to Make (min)", "Quantity"));
         for (Item object: this.currentOrder) {
             System.out.println(object + "\t   " + object.getQuantity());
@@ -75,7 +75,7 @@ public class Order {
         System.out.println("Total Time Required: " + ((this.totalTimeTaken / 60) + " working hours"));
     }
 
-    public void displayPickupDate(Days days, List<Days> openingsTimes){
+    public void displayPickupTime(Days days, List<Days> openingsTimes){
         LocalDateTime pickup = this.pickupDate.atTime(9, 0);
         System.out.println("You can pick up on: " + pickup.plusMinutes(days.calculatePickupTime(this.totalTimeTaken, openingsTimes)));
     }
