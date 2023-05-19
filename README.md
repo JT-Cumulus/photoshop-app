@@ -6,6 +6,9 @@ High Priority
 - [x] Order time countdown / end date
 - [x] User can check invoice / status of order
 - [x] Databases for users
+- [ ] Confirmation of choices
+- [ ] Have order time on invoice aswell
+- [ ] Loop of program until told to stop
 
 Moderate Priority
 - [ ] Error catching for invalid inputs
@@ -13,4 +16,3 @@ Moderate Priority
 Low priority
 - [ ] Login for admin to control employee database
 - [ ] Multiple order with id at same time 
-
