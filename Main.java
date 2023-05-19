@@ -219,7 +219,7 @@ public class Main {
         
         newInvoice = new Invoice(chosenEmployee, chosenCustomer, order);
         newInvoice.displayInvoice(orderDate);
-        order.displayCart();
+        order.displayOrder();
 
     }
 
