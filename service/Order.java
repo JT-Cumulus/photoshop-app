@@ -65,7 +65,7 @@ public class Order {
         this.pickupDate = pickupDate;
     }
 
-    // Displays the cart without changing any values
+    // Displays the order without changing any values
     public void displayOrder(){
         System.out.println(String.format("%-5s %-30s %15s %20s %10s" , "ID", "Item", "Price(EUR)", "Time to Make (min)", "Quantity"));
         for (Item object: this.currentOrder) {
