@@ -10,6 +10,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
@@ -20,7 +21,7 @@ import repository.Customer;
 import repository.Employee;
 
 // Store current items placed in shopping cart
-public class ShoppingCart extends Catalogue{
+public class ShoppingCart extends Order{
     
     private List<Item> currentCart;
     private Integer orderID;
@@ -113,7 +114,7 @@ public class ShoppingCart extends Catalogue{
             writer.name("total price").value(cart.getTotalPrice());
             writer.name("time taken").value(cart.getTotalTimeTaken());
             writer.name("pickup date").value(cart.getPickupDate().format(DateTimeFormatter.ofPattern("yyyy/MM/dd")));
-            writer.name("pickup time").value(cart.getPickupTime().format(DateTimeFormatter.ofPattern("HH:MM")));
+            writer.name("pickup time").value(cart.getPickupTime().format(DateTimeFormatter.ofPattern("HH:mm")));
 
             writer.endObject();
             }
@@ -150,7 +151,7 @@ public class ShoppingCart extends Catalogue{
             String[] data = {
                 cart.orderID.toString(), 
                 Integer.toString(customer.getID()),
-                Days.getDateToday(), 
+                Days.dateToString(LocalDate.now()), 
                 Days.dateToString(cart.pickupDate),
                 Integer.toString(employee.getEmployeeId())};
             writer.writeNext(data);
@@ -168,6 +169,18 @@ public class ShoppingCart extends Catalogue{
     public String returnTotalPrice(){
         String price = String.format(java.util.Locale.US,"%.2f", this.totalPrice);
         return price;
+    }
+
+    public void confirmPurchase(ShoppingCart cart, Days days, Employee employee, Customer customer, List<Days> openingTimes){
+        // Possibly merge these into one function
+        LocalDateTime pickupDate = days.calculatePickup(this.getTotalTimeTaken(), openingTimes);
+        
+        cart.setPickupTime(pickupDate.toLocalTime());
+        cart.setPickupDate(pickupDate.toLocalDate());
+
+        cart.saveCart(cart, employee, customer);
+        cart.exportJson(cart);
+
     }
 
     public List<Item> getCurrentCart(){
@@ -202,11 +215,12 @@ public class ShoppingCart extends Catalogue{
         this.totalTimeTaken = totalTimeTaken;
     }
 
-    public LocalDate getPickupDate(){
+
+    public LocalDate getPickupDate() {
         return this.pickupDate;
     }
 
-    public void setPickupDate(LocalDate pickupDate){
+    public void setPickupDate(LocalDate pickupDate) {
         this.pickupDate = pickupDate;
     }
 
