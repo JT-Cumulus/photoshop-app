@@ -146,9 +146,9 @@ public class Days {
 
         timeNow = timeNow.plus(timeLeft, MINUTES);
         workDuration -= timeLeft;
-        if (currentDay.getDayNumber() == 7) {
+        if (currentDay.getDayNumber() + 1 == 7) {
             currentDay = openingTimes.get(1);
-            timeNow = timeNow.plusDays(1);
+            timeNow = timeNow.plusDays(2);
         }
 
         currentDay = openingTimes.get(currentDay.getDayNumber() + 1);
@@ -165,8 +165,8 @@ public class Days {
 
             workDuration -= dailyWorkDuration;
 
-            if (currentDay.getDayNumber() == 7) {
-                currentDay = openingTimes.get(2);
+            if (currentDay.getDayNumber() + 1 == 7) {
+                currentDay = openingTimes.get(1);
                 timeNow = timeNow.plusDays(2);
                 timeNow = timeNow.withHour(9);
             } else {
