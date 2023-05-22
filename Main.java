@@ -134,11 +134,21 @@ public class Main {
 
             // Check if user wants to make purchase
             if (status.equals("b")){
-                displayOrder(days, openingTimes);
-                Customer saveCustomer = customerEntry();
-                // Possibly merge these into one function
-                cart.saveCart(cart, employee, saveCustomer);
-                cart.exportJson(cart);
+                // Confirm the purchase to be made
+                cart.displayCart();
+                System.out.println("Are you sure you with to make this purchase?");
+                System.out.println("Type 'y' to confirm and 'n' to go back");
+                String confirm = scan.next();
+
+                if (confirm.equals("y")){
+                    displayOrder(days, openingTimes);
+                    Customer saveCustomer = customerEntry();
+                    // Possibly merge these into one function
+                    cart.saveCart(cart, employee, saveCustomer);
+                    cart.exportJson(cart);
+                } else {
+                    status = "c";
+                }
             } 
         }
     }
