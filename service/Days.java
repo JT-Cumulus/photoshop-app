@@ -160,7 +160,6 @@ public class Days {
             while(workDuration > 0 && currentDay != 1){
                 if (currentDay == 7){
                     if(workDuration - openingTimes.get(6).getWorkingMinutes() < 0){
-                        System.out.println(workDuration);
                         return daysTaken;
                     }
                     workDuration -= openingTimes.get(6).getWorkingMinutes();
@@ -170,7 +169,6 @@ public class Days {
                 // Start now and cycle through days of the week csv
                 for(int i = currentDay; i < openingTimes.size(); i++){
                     if(workDuration - openingTimes.get(i).getWorkingMinutes() < 0){
-                        System.out.println(workDuration);
                         return daysTaken;
                     }
                     workDuration -= openingTimes.get(i).getWorkingMinutes();
@@ -188,7 +186,6 @@ public class Days {
             // Start now and cycle through days of the week csv
             for(Days day : openingTimes){
                 if(workDuration - day.getWorkingMinutes() < 0){
-                    System.out.println(workDuration);
                     return daysTaken;
                 }
                 workDuration -= day.getWorkingMinutes();
