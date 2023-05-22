@@ -4,6 +4,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
@@ -47,7 +48,7 @@ public class Invoice {
         System.out.println(String.format("%-30s %10s", "Order Number ", + this.soldOrder.getOrderID()));
         System.out.println(String.format("%-30s %10s","Order Date ", orderDate));
         System.out.println(String.format("%-30s %10s", "Production Time ", (this.soldOrder.getTotalTimeTaken() / 60) + " hrs"));
-        System.out.println(String.format("%-30s %10s %10s", "You can pickup order on ", Days.dateToString(this.soldOrder.getPickupDate()), this.soldOrder.getPickupTime()));
+        System.out.println(String.format("%-30s %10s %10s", "You can pickup order on ", Days.dateToString(this.soldOrder.getPickupDate()), this.soldOrder.getPickupTime().toString()));
         System.out.println("");
      }
 
@@ -89,6 +90,8 @@ public class Invoice {
                 newOrder.setTotalTimeTaken(reader.nextLong());
             } else if (name.equals("pickup date")) {
                 newOrder.setPickupDate(LocalDate.parse(reader.nextString(), DateTimeFormatter.ofPattern("yyyy/MM/dd")));
+            } else if (name.equals("pickup time")) {
+                newOrder.setPickupTime(LocalTime.parse(reader.nextString(), DateTimeFormatter.ofPattern("HH:mm")));
             } else {
                 reader.skipValue(); //avoid some unhandled events
             }

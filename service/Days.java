@@ -87,11 +87,6 @@ public class Days {
         return formattedString;
     }
 
-    // Return the current day in string format
-    public static String getDateToday(){
-        return LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
-    }
-
     // Function for loading the opening hours csv
     public static List<Days> loadDays(){
         List<Days> openingsTimes = new LinkedList<Days>();
@@ -138,127 +133,53 @@ public class Days {
     }
 
     // Function to iterate over days and calculate days taken till pickup
-    public int calculatePickup(Long totalWorkDuration, List<Days> openingTimes){
-        LocalTime timeNow = LocalTime.now();
+    public LocalDateTime calculatePickup(Long totalWorkDuration, List<Days> openingTimes){
+        LocalDateTime timeNow = LocalDateTime.now();
         long workDuration = totalWorkDuration;
-        int currentDay = this.calculateDayOfWeek();
-        int daysTaken = 0;
+        Days currentDay = openingTimes.get(this.calculateDayOfWeek());
 
         // get time left in the day until closing hour
-        long timeLeft = timeNow.until(openingTimes.get(currentDay).getOpenTill(), MINUTES);
+        long timeLeft = timeNow.toLocalTime().until(currentDay.getOpenTill(), MINUTES);
+        if (timeLeft > workDuration) {
+            return timeNow.plus(workDuration, MINUTES);
+        }
+
+        timeNow = timeNow.plus(timeLeft, MINUTES);
+        workDuration -= timeLeft;
+        if (currentDay.getDayNumber() == 7) {
+            currentDay = openingTimes.get(1);
+            timeNow = timeNow.plusDays(1);
+        }
+
+        currentDay = openingTimes.get(currentDay.getDayNumber() + 1);
+        timeNow = timeNow.plusDays(1);
+
+        while(workDuration > 0) {
+            long dailyWorkDuration = currentDay.getWorkingMinutes();
+            timeNow = timeNow.withHour(9);
+
+            if (dailyWorkDuration > workDuration) {
+                timeNow = timeNow.plus(dailyWorkDuration, MINUTES);
+                break;
+            }
+
+            workDuration -= dailyWorkDuration;
+
+            if (currentDay.getDayNumber() == 7) {
+                currentDay = openingTimes.get(2);
+                timeNow = timeNow.plusDays(2);
+                timeNow = timeNow.withHour(9);
+            } else {
+                currentDay = openingTimes.get(currentDay.getDayNumber() + 1);
+                timeNow = timeNow.plusDays(1);
+            }
+            
+        }
         
-        // subtract time left of today from total working time, go to next day
-        if (workDuration > timeLeft) {
-            daysTaken ++;
-        }
-        workDuration = workDuration - timeLeft;
-
-        // interation of weekday; could potentially be a function, future refactoring
-        if(currentDay < 7){
-            currentDay++;
-        } else {
-            currentDay = 1;
-        }
-
-        if (currentDay != 1){
-            while(workDuration > 0 && currentDay != 1){
-                if (currentDay == 7){
-                    if(workDuration - openingTimes.get(6).getWorkingMinutes() < 0){
-                        return daysTaken;
-                    }
-                    workDuration -= openingTimes.get(6).getWorkingMinutes();
-                    daysTaken++;
-                    currentDay = 1;
-                }
-                // Start now and cycle through days of the week csv
-                for(int i = currentDay; i < openingTimes.size(); i++){
-                    if(workDuration - openingTimes.get(i).getWorkingMinutes() < 0){
-                        return daysTaken;
-                    }
-                    workDuration -= openingTimes.get(i).getWorkingMinutes();
-                    if(currentDay < 7){
-                        currentDay++;
-                    } else {
-                        currentDay = 1;
-                    }
-                    daysTaken++;
-                }
-            }
-        }
-
-        while(workDuration > 0){
-            // Start now and cycle through days of the week csv
-            for(Days day : openingTimes){
-                if(workDuration - day.getWorkingMinutes() < 0){
-                    return daysTaken;
-                }
-                workDuration -= day.getWorkingMinutes();
-                daysTaken++;
-            }
-        }
-        return daysTaken;
+        return timeNow;
     }
 
-    // Calculate time of pickup
-    public long calculatePickupTime(Long totalWorkDuration, List<Days> openingTimes){
-        LocalTime timeNow = LocalTime.now();
-        long workDuration = totalWorkDuration;
-        int currentDay = this.calculateDayOfWeek();
-
-        // get time left in the day until closing hour
-        long timeLeft = timeNow.until(openingTimes.get(currentDay).getOpenTill(), MINUTES);
-        
-        // subtract time left of today from total working time, go to next day
-        workDuration = workDuration - timeLeft;
-
-        // interation of weekday; could potentially be a function, future refactoring
-        if(currentDay < 7){
-            currentDay++;
-        } else {
-            currentDay = 1;
-        }
-
-        if (currentDay != 1){
-            while(workDuration > 0 && currentDay != 1){
-                if (currentDay == 7){
-                    if(workDuration - openingTimes.get(6).getWorkingMinutes() < 0){
-                        return workDuration;
-                    }
-                    workDuration -= openingTimes.get(6).getWorkingMinutes();
-                    currentDay = 1;
-                }
-                // Start now and cycle through days of the week csv
-                for(int i = currentDay; i < openingTimes.size(); i++){
-                    if(workDuration - openingTimes.get(i).getWorkingMinutes() < 0){
-                        return workDuration;
-                    }
-                    workDuration -= openingTimes.get(i).getWorkingMinutes();
-                    if(currentDay < 7){
-                        currentDay++;
-                    } else {
-                        currentDay = 1;
-                    }
-                }
-            }
-        }
-
-        while(workDuration > 0){
-            // Start now and cycle through days of the week csv
-            for(Days day : openingTimes){
-                if(workDuration - day.getWorkingMinutes() < 0){
-                    return workDuration;
-                }
-                workDuration -= day.getWorkingMinutes();
-            }
-        }
-        return workDuration;
-    }
-
-    public LocalTime getTime(long timeTaken, ShoppingCart cart){
-        LocalDateTime cart.getPickupDate().plus(timeTaken, MINUTES);
-        
-    }
-
+    
     public String toString(){
         return String.format("%-30s %15s %15s" , this.day, this.openFrom, this.openTill );
     }

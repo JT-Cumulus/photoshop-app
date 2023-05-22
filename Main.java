@@ -1,6 +1,3 @@
-import java.time.LocalDate;
-import static java.time.temporal.ChronoUnit.DAYS;
-
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
@@ -133,16 +130,8 @@ public class Main {
 
                 if (confirm.equals("y")){
 
-                    Customer saveCustomer = customerEntry();
-                    // Possibly merge these into one function
-                    int workingDaysNeeded = days.calculatePickup(cart.getTotalTimeTaken(), openingTimes);
-                    LocalDate dateNow = LocalDate.now();
-                    LocalDate finalDate = dateNow.plus(workingDaysNeeded, DAYS);
-                    cart.setPickupTime(days.getTime(days.calculatePickupTime(cart.getTotalTimeTaken(), openingTimes), cart));
-                    cart.setPickupDate(finalDate);
-
-                    cart.saveCart(cart, employee, saveCustomer);
-                    cart.exportJson(cart);
+                    Customer currentCustomer = customerEntry();
+                    cart.confirmPurchase(cart, days, employee, currentCustomer, openingTimes);
                     checkOrder(cart.getOrderID(), days, openingTimes);
                 } else {
                     status = "c";
@@ -190,7 +179,7 @@ public class Main {
         Order order = newInvoice.findInvoice(orderID, catalogue);
 
         order.displayOrder();
-        order.displayPickupTime(days, openingTimes);
+        order.displayPickupTime();
         userLocation = 0;
     }
 
@@ -209,7 +198,7 @@ public class Main {
         newInvoice = new Invoice(chosenEmployee, chosenCustomer, order);
         newInvoice.displayInvoice(orderDate);
         order.displayOrder();
-        order.displayPickupTime(days, openingTimes);
+        order.displayPickupTime();
 
         userLocation = 0;
     }
