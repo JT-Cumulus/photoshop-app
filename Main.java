@@ -37,39 +37,31 @@ public class Main {
         System.out.println("Please select your employee ID: ");
         Employee currentEmployee = users.getEmployee(userNavigation());
 
-        // Main store menu
-        shopMenu();
-
         // Load daily prices
         catalogue = Item.loadItems(catalogue);
 
         // Set quit condition for terminating application
         while (userLocation > -1){
+            // Main store menu
+            shopMenu();
+
             // Check for user input
             int option = userNavigation();
 
-            switch(option){
-                case 1:
+            if (option == 1) {
                 // Add item to shopping cart here
                 purchaseMenu(currentEmployee, days, openingTimes);
-                break;
-
+            } else if (option == 2) {
                 // Print order details - provide date for order pickup
-                case 2:
                 System.out.println("Please enter your order ID: ");
                 int orderID = userNavigation();
                 checkOrder(orderID, days, openingTimes);
-                break;
-
+            } else if (option == 3) {
                 // Print invoice details / allow user to access order details from invoice no.
-                case 3:
                 checkInvoice(users, catalogue, days, openingTimes);
-                break;
-
+            } else if (option == 0) {
                 // Exit program condition
-                case 0:
                 userLocation = -1;
-
             }
         }
         
@@ -192,22 +184,6 @@ public class Main {
         }
 
         return null;
-    }
-
-    // Function to check order for customer
-    public static void displayOrder(Days days, List<Days> openingTimes){
-        String menuDivider = "---------------------------";
-
-        System.out.println(menuDivider);
-        cart.displayCart();
-        int workingDaysNeeded = days.calculatePickup(cart.getTotalTimeTaken(), openingTimes);
-        LocalDate dateNow = LocalDate.now();
-        LocalDate finalDate = dateNow.plus(workingDaysNeeded, DAYS);
-        cart.setPickupDate(finalDate);
-
-        System.out.println(menuDivider);
-
-        userLocation = 0;
     }
 
     // Function to check an order from its ID
