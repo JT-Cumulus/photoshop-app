@@ -10,6 +10,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
 import com.google.gson.stream.JsonWriter;
@@ -26,6 +27,7 @@ public class ShoppingCart extends Catalogue{
     private double totalPrice;
     private long totalTimeTaken;
     private LocalDate pickupDate;
+    private LocalTime pickupTime;
 
     public ShoppingCart(){
         this.orderID = loadItems();
@@ -111,6 +113,7 @@ public class ShoppingCart extends Catalogue{
             writer.name("total price").value(cart.getTotalPrice());
             writer.name("time taken").value(cart.getTotalTimeTaken());
             writer.name("pickup date").value(cart.getPickupDate().format(DateTimeFormatter.ofPattern("yyyy/MM/dd")));
+            writer.name("pickup time").value(cart.getPickupTime().format(DateTimeFormatter.ofPattern("HH:MM")));
 
             writer.endObject();
             }
@@ -205,6 +208,14 @@ public class ShoppingCart extends Catalogue{
 
     public void setPickupDate(LocalDate pickupDate){
         this.pickupDate = pickupDate;
+    }
+
+    public LocalTime getPickupTime(){
+        return this.pickupTime;
+    }
+
+    public void setPickupTime(LocalTime pickupTime){
+        this.pickupTime = pickupTime;
     }
 
 }

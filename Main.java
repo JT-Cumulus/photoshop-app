@@ -51,17 +51,21 @@ public class Main {
             if (option == 1) {
                 // Add item to shopping cart here
                 purchaseMenu(currentEmployee, days, openingTimes);
+
             } else if (option == 2) {
                 // Print order details - provide date for order pickup
                 System.out.println("Please enter your order ID: ");
                 int orderID = userNavigation();
                 checkOrder(orderID, days, openingTimes);
+
             } else if (option == 3) {
                 // Print invoice details / allow user to access order details from invoice no.
                 checkInvoice(users, catalogue, days, openingTimes);
+
             } else if (option == 0) {
                 // Exit program condition
                 userLocation = -1;
+                break;
             }
         }
         
@@ -72,14 +76,7 @@ public class Main {
     // Function for user navigation
     public static int userNavigation(){
         int userChoice = 0;
-        while (userChoice < 1){
-            try {
-                userChoice = scan.nextInt();
-            } catch(Exception e) { 
-                System.out.println("Invalid input, try again");
-                break;
-            }
-        }
+        userChoice = scan.nextInt();
         return userChoice;
     }
 
@@ -141,6 +138,7 @@ public class Main {
                     int workingDaysNeeded = days.calculatePickup(cart.getTotalTimeTaken(), openingTimes);
                     LocalDate dateNow = LocalDate.now();
                     LocalDate finalDate = dateNow.plus(workingDaysNeeded, DAYS);
+                    cart.setPickupTime(days.getTime(days.calculatePickupTime(cart.getTotalTimeTaken(), openingTimes), cart));
                     cart.setPickupDate(finalDate);
 
                     cart.saveCart(cart, employee, saveCustomer);

@@ -47,7 +47,7 @@ public class Invoice {
         System.out.println(String.format("%-30s %10s", "Order Number ", + this.soldOrder.getOrderID()));
         System.out.println(String.format("%-30s %10s","Order Date ", orderDate));
         System.out.println(String.format("%-30s %10s", "Production Time ", (this.soldOrder.getTotalTimeTaken() / 60) + " hrs"));
-        System.out.println(String.format("%-30s %10s", "You can pickup order on ", Days.dateToString(this.soldOrder.getPickupDate())));
+        System.out.println(String.format("%-30s %10s %10s", "You can pickup order on ", Days.dateToString(this.soldOrder.getPickupDate()), this.soldOrder.getPickupTime()));
         System.out.println("");
      }
 

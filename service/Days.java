@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.List;
@@ -133,22 +134,25 @@ public class Days {
     public int calculateDayOfWeek(){
         Calendar c = Calendar.getInstance();
         c.setTime(c.getTime());
-        return c.get(Calendar.DAY_OF_WEEK);
+        return c.get(Calendar.DAY_OF_WEEK) - 1;
     }
 
     // Function to iterate over days and calculate days taken till pickup
     public int calculatePickup(Long totalWorkDuration, List<Days> openingTimes){
         LocalTime timeNow = LocalTime.now();
         long workDuration = totalWorkDuration;
-        int currentDay = this.calculateDayOfWeek() - 1;
+        int currentDay = this.calculateDayOfWeek();
         int daysTaken = 0;
 
         // get time left in the day until closing hour
         long timeLeft = timeNow.until(openingTimes.get(currentDay).getOpenTill(), MINUTES);
         
         // subtract time left of today from total working time, go to next day
+        if (workDuration > timeLeft) {
+            daysTaken ++;
+        }
         workDuration = workDuration - timeLeft;
-        daysTaken ++;
+
         // interation of weekday; could potentially be a function, future refactoring
         if(currentDay < 7){
             currentDay++;
@@ -199,13 +203,14 @@ public class Days {
     public long calculatePickupTime(Long totalWorkDuration, List<Days> openingTimes){
         LocalTime timeNow = LocalTime.now();
         long workDuration = totalWorkDuration;
-        int currentDay = this.calculateDayOfWeek() - 1;
+        int currentDay = this.calculateDayOfWeek();
 
         // get time left in the day until closing hour
         long timeLeft = timeNow.until(openingTimes.get(currentDay).getOpenTill(), MINUTES);
         
         // subtract time left of today from total working time, go to next day
         workDuration = workDuration - timeLeft;
+
         // interation of weekday; could potentially be a function, future refactoring
         if(currentDay < 7){
             currentDay++;
@@ -248,8 +253,12 @@ public class Days {
         }
         return workDuration;
     }
-    
-    
+
+    public LocalTime getTime(long timeTaken, ShoppingCart cart){
+        LocalDateTime cart.getPickupDate().plus(timeTaken, MINUTES);
+        
+    }
+
     public String toString(){
         return String.format("%-30s %15s %15s" , this.day, this.openFrom, this.openTill );
     }

@@ -2,6 +2,7 @@ package service;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,13 +13,15 @@ public class Order {
     private double totalPrice;
     private long totalTimeTaken;
     private LocalDate pickupDate;
+    private LocalTime pickupTime;
 
-    public Order(List<Item> currentOrder, Integer orderID, double totalPrice, long totalTimeTaken, LocalDate pickupDate) {
+    public Order(List<Item> currentOrder, Integer orderID, double totalPrice, long totalTimeTaken, LocalDate pickupDate, LocalTime pickupTime) {
         this.currentOrder = currentOrder;
         this.orderID = orderID;
         this.totalPrice = totalPrice;
         this.totalTimeTaken = totalTimeTaken;
         this.pickupDate = pickupDate;
+        this.pickupTime = pickupTime;
     }
 
     public Order(){
@@ -75,8 +78,9 @@ public class Order {
         System.out.println("Total Time Required: " + ((this.totalTimeTaken / 60) + " working hours"));
     }
 
+    // Show the pickup time
     public void displayPickupTime(Days days, List<Days> openingsTimes){
-        LocalDateTime pickup = this.pickupDate.atTime(9, 0);
+        LocalDateTime pickup = this.pickupDate.atTime(LocalTime.of(9,0));
         System.out.println("You can pick up on: " + pickup.plusMinutes(days.calculatePickupTime(this.totalTimeTaken, openingsTimes)));
     }
 
@@ -109,7 +113,11 @@ public class Order {
         }
     }
 
+    public LocalTime getPickupTime(){
+        return this.pickupTime;
+    }
 
-
-    
+    public void setPickupTime(LocalTime pickupTime){
+        this.pickupTime = pickupTime;
+    }
 }
