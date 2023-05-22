@@ -56,12 +56,14 @@ public class Main {
 
                 // Print order details - provide date for order pickup
                 case 2:
-                checkOrder(days, openingTimes);
+                System.out.println("Please enter your order ID: ");
+                int orderID = userNavigation();
+                checkOrder(orderID, days, openingTimes);
                 break;
 
                 // Print invoice details / allow user to access order details from invoice no.
                 case 3:
-                checkInvoice(users, catalogue);
+                checkInvoice(users, catalogue, days, openingTimes);
                 break;
 
                 // Exit program condition
@@ -105,7 +107,7 @@ public class Main {
     }
 
     //Function for making purchase
-    public static void purchaseMenu(Employee employee, Days days, List<Days> openingTimes){
+    public static void purchaseMenu(Employee employee, Days days, List<Days> openingTimes) throws FileNotFoundException, IOException{
 
         String status = "c";
         while (status.equals("c")) {
@@ -141,11 +143,17 @@ public class Main {
                 String confirm = scan.next();
 
                 if (confirm.equals("y")){
-                    displayOrder(days, openingTimes);
+
                     Customer saveCustomer = customerEntry();
                     // Possibly merge these into one function
+                    int workingDaysNeeded = days.calculatePickup(cart.getTotalTimeTaken(), openingTimes);
+                    LocalDate dateNow = LocalDate.now();
+                    LocalDate finalDate = dateNow.plus(workingDaysNeeded, DAYS);
+                    cart.setPickupDate(finalDate);
+
                     cart.saveCart(cart, employee, saveCustomer);
                     cart.exportJson(cart);
+                    checkOrder(cart.getOrderID(), days, openingTimes);
                 } else {
                     status = "c";
                 }
@@ -196,33 +204,30 @@ public class Main {
         LocalDate dateNow = LocalDate.now();
         LocalDate finalDate = dateNow.plus(workingDaysNeeded, DAYS);
         cart.setPickupDate(finalDate);
-        System.out.println("Order can be picked up on: " + finalDate);
+
         System.out.println(menuDivider);
 
-        userLocation = -1;
+        userLocation = 0;
     }
 
     // Function to check an order from its ID
-    public static void checkOrder(Days days, List<Days> openingTimes) throws FileNotFoundException, IOException{
+    public static void checkOrder(int orderID, Days days, List<Days> openingTimes) throws FileNotFoundException, IOException{
         Invoice newInvoice = new Invoice();
-        System.out.println("Please enter your order ID: ");
-        int orderID = userNavigation();
         Order order = newInvoice.findInvoice(orderID, catalogue);
 
         order.displayOrder();
         order.displayPickupTime(days, openingTimes);
-        userLocation = -1;
+        userLocation = 0;
     }
 
     // Check invoice navigation - prints out the invoice of the order id
-    public static void checkInvoice(UserHandler user, Catalogue catalogue) throws FileNotFoundException, IOException{
+    public static void checkInvoice(UserHandler user, Catalogue catalogue, Days days, List<Days> openingTimes) throws FileNotFoundException, IOException{
         Invoice newInvoice = new Invoice();
         System.out.println("Please enter your order ID: ");
         int orderID = userNavigation();
         String[] userInfo = users.getInfo(orderID);
         Order order = newInvoice.findInvoice(orderID, catalogue);
 
-        userLocation = -1;
         Customer chosenCustomer = user.getCustomer(Integer.parseInt(userInfo[1]));
         Employee chosenEmployee = user.getEmployee(Integer.parseInt(userInfo[4]));
         String orderDate = userInfo[2];
@@ -230,7 +235,9 @@ public class Main {
         newInvoice = new Invoice(chosenEmployee, chosenCustomer, order);
         newInvoice.displayInvoice(orderDate);
         order.displayOrder();
+        order.displayPickupTime(days, openingTimes);
 
+        userLocation = 0;
     }
 
 }
