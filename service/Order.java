@@ -79,9 +79,8 @@ public class Order {
     }
 
     // Show the pickup time
-    public void displayPickupTime(Days days, List<Days> openingsTimes){
-        LocalDateTime pickup = this.pickupDate.atTime(LocalTime.of(9,0));
-        System.out.println("You can pick up on: " + pickup.plusMinutes(days.calculatePickupTime(this.totalTimeTaken, openingsTimes)));
+    public void displayPickupTime(){
+        System.out.println("You can pick up on: " + this.getPickupDate() + this.getPickupTime());
     }
 
     // Return the item within the cart such that the quantity can be updated in the shopping cart
