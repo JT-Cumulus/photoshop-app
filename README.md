@@ -6,9 +6,9 @@ High Priority
 - [x] Order time countdown / end date
 - [x] User can check invoice / status of order
 - [x] Databases for users
-- [ ] Confirmation of choices
-- [ ] Have order time on invoice aswell
-- [ ] Loop of program until told to stop
+- [x] Confirmation of choices
+- [x] Have order time on invoice aswell
+- [x] Loop of program until told to stop
 
 Moderate Priority
 - [ ] Error catching for invalid inputs
