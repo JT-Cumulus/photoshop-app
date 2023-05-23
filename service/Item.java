@@ -5,7 +5,7 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 // For items in the catalogue
-// With ID, name, price for the item
+// With ID, name, price, and quantity for the item
 public class Item {
     private int id;
     private String name;
@@ -124,7 +124,7 @@ public class Item {
 
     public String toString() {
        // Format print to be in readable columns with correct decimal points
-        return String.format("%-5s %-30s %15.2f %20s" , this.id, this.name, this.price, this.minutes );
+        return String.format("%-5s %-30s %15.2f %20s" , this.getId(), this.getName(), this.getPrice(), this.getMinutes() );
     }    
 
 
