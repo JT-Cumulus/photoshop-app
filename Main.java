@@ -79,7 +79,7 @@ public class Main {
 
     // Function displaying the shop menu for user navigation
     public static void shopMenu(){
-        String menuWelcomeMessage = "Hello, welcome to PhotoShop \n" + "Please type a number to navigate the menu \n";
+        String menuWelcomeMessage = "Hello, welcome to PhotoShop! \n" + "Please type a number to navigate the menu \n";
         String menuDivider = "---------------------------";
 
         System.out.println(menuDivider);
@@ -102,10 +102,10 @@ public class Main {
             int choice = scan.nextInt();
             Item item = catalogue.getItem(choice);
             cart.addItem(item);
-            System.out.print("You have added: " + item.getName());
+            System.out.print("\nYou have added: " + item.getName());
             System.out.print("\nTo add another item type 'c' ");
             System.out.print("\nTo remove an item type 'v' ");
-            System.out.print("\nTo finalise your purchase type 'b': ");
+            System.out.print("\nTo finalise your purchase type 'b': \n ");
             status = scan.next();
 
             // Check if user wants to remove item
@@ -124,7 +124,7 @@ public class Main {
             if (status.equals("b")){
                 // Confirm the purchase to be made
                 cart.displayCart();
-                System.out.println("Are you sure you with to make this purchase?");
+                System.out.println("\nAre you sure you with to make this purchase?");
                 System.out.println("Type 'y' to confirm and 'n' to go back");
                 String confirm = scan.next();
 
@@ -145,7 +145,7 @@ public class Main {
         String menuDivider = "---------------------------";
 
         System.out.println(menuDivider);
-        System.out.println("Existing customer, new customer or guest?");
+        System.out.println("Enter details to complete purchase");
         System.out.println("Press 1 - for return customer");
         System.out.println("Press 2 - for new customer");
         System.out.println("Press 3 - for guest");
