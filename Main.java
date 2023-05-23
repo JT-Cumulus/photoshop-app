@@ -14,7 +14,6 @@ import service.Order;
 import service.ShoppingCart;
 
 public class Main {
-
     // First instance catalogue so daily catalogue can be loaded in
     static Catalogue catalogue = new Catalogue();
     static ShoppingCart cart = new ShoppingCart();
@@ -191,10 +190,12 @@ public class Main {
         String[] userInfo = users.getInfo(orderID);
         Order order = newInvoice.findInvoice(orderID, catalogue);
 
+        // Grabs the saved customer and employee using orders.csv
         Customer chosenCustomer = user.getCustomer(Integer.parseInt(userInfo[1]));
         Employee chosenEmployee = user.getEmployee(Integer.parseInt(userInfo[4]));
         String orderDate = userInfo[2];
         
+        // New invoice instanced from the retrieved data
         newInvoice = new Invoice(chosenEmployee, chosenCustomer, order);
         newInvoice.displayInvoice(orderDate);
         order.displayOrder();

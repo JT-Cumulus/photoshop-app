@@ -68,6 +68,14 @@ public class Order {
         this.pickupDate = pickupDate;
     }
 
+    public LocalTime getPickupTime(){
+        return this.pickupTime;
+    }
+
+    public void setPickupTime(LocalTime pickupTime){
+        this.pickupTime = pickupTime;
+    }
+
     // Convert the pickup date to a string
     public String dateToString(){
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
@@ -124,13 +132,5 @@ public class Order {
         } else {
             this.currentOrder.remove(item);
         }
-    }
-
-    public LocalTime getPickupTime(){
-        return this.pickupTime;
-    }
-
-    public void setPickupTime(LocalTime pickupTime){
-        this.pickupTime = pickupTime;
     }
 }

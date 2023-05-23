@@ -37,6 +37,54 @@ public class ShoppingCart extends Order{
         this.totalTimeTaken = 0;
     }
 
+    public List<Item> getCurrentCart(){
+        return this.currentCart;
+    }
+    
+    public void setCurrentCart(List<Item> currentCart) {
+        this.currentCart = currentCart;
+    }
+
+    public Integer getOrderID() {
+        return this.orderID;
+    }
+
+    public void setOrderID(Integer orderID) {
+        this.orderID = orderID;
+    }
+
+    public double getTotalPrice() {
+        return this.totalPrice;
+    }
+
+    public void setTotalPrice(double totalPrice) {
+        this.totalPrice = totalPrice;
+    }
+
+    public long getTotalTimeTaken() {
+        return this.totalTimeTaken;
+    }
+
+    public void setTotalTimeTaken(long totalTimeTaken) {
+        this.totalTimeTaken = totalTimeTaken;
+    }
+
+    public LocalDate getPickupDate() {
+        return this.pickupDate;
+    }
+
+    public void setPickupDate(LocalDate pickupDate) {
+        this.pickupDate = pickupDate;
+    }
+
+    public LocalTime getPickupTime(){
+        return this.pickupTime;
+    }
+
+    public void setPickupTime(LocalTime pickupTime){
+        this.pickupTime = pickupTime;
+    }
+
     // Load items already saved as orders
     public int loadItems(){
         String fileName = "database/PhotoShop_Orders.csv";
@@ -171,8 +219,8 @@ public class ShoppingCart extends Order{
         return price;
     }
 
+    // Function made to save data of shopping cart after purchase is confirmed
     public void confirmPurchase(ShoppingCart cart, Days days, Employee employee, Customer customer, List<Days> openingTimes){
-        // Possibly merge these into one function
         LocalDateTime pickupDate = days.calculatePickup(this.getTotalTimeTaken(), openingTimes);
         
         cart.setPickupTime(pickupDate.toLocalTime());
@@ -180,56 +228,5 @@ public class ShoppingCart extends Order{
 
         cart.saveCart(cart, employee, customer);
         cart.exportJson(cart);
-
     }
-
-    public List<Item> getCurrentCart(){
-        return this.currentCart;
-    }
-    
-    public void setCurrentCart(List<Item> currentCart) {
-        this.currentCart = currentCart;
-    }
-
-    public Integer getOrderID() {
-        return this.orderID;
-    }
-
-    public void setOrderID(Integer orderID) {
-        this.orderID = orderID;
-    }
-
-    public double getTotalPrice() {
-        return this.totalPrice;
-    }
-
-    public void setTotalPrice(double totalPrice) {
-        this.totalPrice = totalPrice;
-    }
-
-    public long getTotalTimeTaken() {
-        return this.totalTimeTaken;
-    }
-
-    public void setTotalTimeTaken(long totalTimeTaken) {
-        this.totalTimeTaken = totalTimeTaken;
-    }
-
-
-    public LocalDate getPickupDate() {
-        return this.pickupDate;
-    }
-
-    public void setPickupDate(LocalDate pickupDate) {
-        this.pickupDate = pickupDate;
-    }
-
-    public LocalTime getPickupTime(){
-        return this.pickupTime;
-    }
-
-    public void setPickupTime(LocalTime pickupTime){
-        this.pickupTime = pickupTime;
-    }
-
 }
