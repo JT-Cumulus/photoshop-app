@@ -11,7 +11,7 @@ High Priority
 - [x] Loop of program until told to stop
 
 Moderate Priority
-- [ ] Error catching for invalid inputs
+- [ ] Error catching for invalid inputs / convert all scans to string
 
 Low priority
 - [ ] Login for admin to control employee database
