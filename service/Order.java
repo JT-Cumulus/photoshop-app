@@ -1,7 +1,6 @@
 package service;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -89,13 +88,13 @@ public class Order {
         for (Item object: this.currentOrder) {
             System.out.println(object + "\t   " + object.getQuantity());
         }
-        System.out.println("Total Price: " + this.getTotalPrice() + " EUR");
-        System.out.println("Total Time Required: " + ((this.totalTimeTaken / 60) + " working hours"));
+        System.out.println("");
+        System.out.println(String.format("%-20s %10.2f %-10s", "Total Price: ", this.getTotalPrice(), "EUR"));
     }
 
     // Show the pickup time
     public void displayPickupTime(){
-        System.out.println("You can pick up on: " + this.getPickupDate() + " " + this.getPickupTime());
+        System.out.println(String.format("%-20s %10s %-10s", "Pickup Date: ", this.getPickupDate(), this.getPickupTime()));
     }
 
     // Return the item within the cart such that the quantity can be updated in the shopping cart
