@@ -3,8 +3,6 @@ package service;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.LinkedList;
@@ -80,13 +78,6 @@ public class Days {
         return new Days(dayNumber, name, openFrom, openTill);
     }
 
-    // Convert a localdate object to string format
-    public static String dateToString(LocalDate date){
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
-        String formattedString = date.format(formatter);
-        return formattedString;
-    }
-
     // Function for loading the opening hours csv
     public static List<Days> loadDays(){
         List<Days> openingsTimes = new LinkedList<Days>();
@@ -105,7 +96,7 @@ public class Days {
                 String line = inputStream.nextLine();
                 String[] values = line.split(";");
                 // this adds the currently parsed line to the 2-dimensional string array
-                Days day = createDay(values);
+                Days day = Days.createDay(values);
                 openingsTimes.add(day);
             }
 
@@ -132,7 +123,7 @@ public class Days {
         return c.get(Calendar.DAY_OF_WEEK) - 1;
     }
 
-    // Function to iterate over days and calculate days taken till pickup
+    // Function to iterate over days and calculate time taken till pickup
     public LocalDateTime calculatePickup(Long totalWorkDuration, List<Days> openingTimes){
         LocalDateTime timeNow = LocalDateTime.now();
         long workDuration = totalWorkDuration;
