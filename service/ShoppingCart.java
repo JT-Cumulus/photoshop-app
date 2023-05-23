@@ -199,7 +199,7 @@ public class ShoppingCart extends Order{
             String[] data = {
                 cart.orderID.toString(), 
                 Integer.toString(customer.getID()),
-                LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")),
+                LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd")),
                 cart.dateToString(),
                 Integer.toString(employee.getEmployeeId())};
             writer.writeNext(data);
