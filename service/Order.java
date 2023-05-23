@@ -3,6 +3,7 @@ package service;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -68,6 +69,20 @@ public class Order {
         this.pickupDate = pickupDate;
     }
 
+    // Convert the pickup date to a string
+    public String dateToString(){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+        String formattedString = this.getPickupDate().format(formatter);
+        return formattedString;
+    }
+
+    // Convert the pickup time to a string
+    public String timeToString(){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+        String formattedString = this.getPickupTime().format(formatter);
+        return formattedString;
+    }
+
     // Displays the order without changing any values
     public void displayOrder(){
         System.out.println(String.format("%-5s %-30s %15s %20s %10s" , "ID", "Item", "Price(EUR)", "Time to Make (min)", "Quantity"));
@@ -80,7 +95,7 @@ public class Order {
 
     // Show the pickup time
     public void displayPickupTime(){
-        System.out.println("You can pick up on: " + this.getPickupDate() + this.getPickupTime());
+        System.out.println("You can pick up on: " + this.getPickupDate() + " " + this.getPickupTime());
     }
 
     // Return the item within the cart such that the quantity can be updated in the shopping cart

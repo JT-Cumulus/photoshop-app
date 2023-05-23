@@ -151,8 +151,8 @@ public class ShoppingCart extends Order{
             String[] data = {
                 cart.orderID.toString(), 
                 Integer.toString(customer.getID()),
-                Days.dateToString(LocalDate.now()), 
-                Days.dateToString(cart.pickupDate),
+                LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")),
+                cart.dateToString(),
                 Integer.toString(employee.getEmployeeId())};
             writer.writeNext(data);
     
