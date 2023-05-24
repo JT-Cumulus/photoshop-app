@@ -129,42 +129,44 @@ public class Days {
         long workDuration = totalWorkDuration;
         Days currentDay = openingTimes.get(this.calculateDayOfWeek());
 
-        // get time left in the day until closing hour
+        // get time left in the day until closing hour and return if order can be completed today
         long timeLeft = timeNow.toLocalTime().until(currentDay.getOpenTill(), MINUTES);
         if (timeLeft > workDuration) {
             return timeNow.plus(workDuration, MINUTES);
         }
 
+        // check if its a saturday
         timeNow = timeNow.plus(timeLeft, MINUTES);
         workDuration -= timeLeft;
-        if (currentDay.getDayNumber() + 1 == 7) {
+        if (currentDay.getDayNumber() == 6) {
             currentDay = openingTimes.get(1);
-            timeNow = timeNow.plusDays(2);
+            timeNow = timeNow.plusDays(1);
         }
 
-        currentDay = openingTimes.get(currentDay.getDayNumber() + 1);
+        // change day to new day
+        currentDay = openingTimes.get(currentDay.getDayNumber());
         timeNow = timeNow.plusDays(1);
 
+        // loop until workduration ticks down to nothing
         while(workDuration > 0) {
             long dailyWorkDuration = currentDay.getWorkingMinutes();
             timeNow = timeNow.withHour(9);
+            timeNow = timeNow.withMinute(0);
 
             if (dailyWorkDuration > workDuration) {
-                timeNow = timeNow.plus(dailyWorkDuration, MINUTES);
+                timeNow = timeNow.plus(workDuration, MINUTES);
                 break;
             }
 
             workDuration -= dailyWorkDuration;
 
-            if (currentDay.getDayNumber() + 1 == 7) {
+            if (currentDay.getDayNumber() == 7) {
                 currentDay = openingTimes.get(1);
-                timeNow = timeNow.plusDays(2);
-                timeNow = timeNow.withHour(9);
+                timeNow = timeNow.plusDays(1);
             } else {
-                currentDay = openingTimes.get(currentDay.getDayNumber() + 1);
+                currentDay = openingTimes.get(currentDay.getDayNumber());
                 timeNow = timeNow.plusDays(1);
             }
-            
         }
         
         return timeNow;
