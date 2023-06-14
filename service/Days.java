@@ -140,7 +140,7 @@ public class Days {
         workDuration -= timeLeft;
         if (currentDay.getDayNumber() == 6) {
             currentDay = openingTimes.get(1);
-            timeNow = timeNow.plusDays(1);
+            timeNow = timeNow.plusDays(2);
         }
 
         // change day to new day
@@ -162,7 +162,7 @@ public class Days {
 
             if (currentDay.getDayNumber() == 7) {
                 currentDay = openingTimes.get(1);
-                timeNow = timeNow.plusDays(1);
+                timeNow = timeNow.plusDays(2);
             } else {
                 currentDay = openingTimes.get(currentDay.getDayNumber());
                 timeNow = timeNow.plusDays(1);
